@@ -1,0 +1,4905 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รู้จัก Bitcoin &amp; Blockchain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-0:        #03060f;
+      --bg-1:        #060d1a;
+      --bg-2:        #0a1628;
+      --bg-3:        #0f1e38;
+      --gold:        #F7931A;
+      --gold-dim:    #c9a227;
+      --teal:        #00D4AA;
+      --blue:        #3B82F6;
+      --purple:      #8B5CF6;
+      --red:         #EF4444;
+      --green:       #22C55E;
+      --text-1:      #F1F5F9;
+      --text-2:      #CBD5E1;
+      --text-3:      #94A3B8;
+      --border:      #1E2D45;
+      --border-2:    #2a3f60;
+      --container: 1100px;
+      --nav-h: 78px;
+      --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.28);
+      --shadow-glow: 0 0 0 1px rgba(247, 147, 26, 0.08), 0 0 40px rgba(59, 130, 246, 0.15);
+      --radius-xl: 30px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Sarabun", sans-serif;
+      font-size: 18px;
+      line-height: 1.85;
+      color: var(--text-1);
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(247, 147, 26, 0.10), transparent 22%),
+        linear-gradient(180deg, var(--bg-0) 0%, #040814 100%);
+      overflow-x: hidden;
+    }
+
+    img,
+    svg,
+    canvas {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+      color: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    p,
+    li,
+    td,
+    th,
+    label,
+    input,
+    textarea {
+      font-size: clamp(18px, 2vw, 20px);
+      line-height: 1.85;
+      color: var(--text-2);
+      overflow-wrap: anywhere;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .display,
+    .stat-number,
+    .section-number,
+    .kicker,
+    .badge,
+    .count-pill,
+    .logo-mark {
+      font-family: "Kanit", sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .section-title,
+    .brand-text,
+    .badge,
+    .button,
+    .stat-number {
+      overflow-wrap: anywhere;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section {
+      position: relative;
+      padding: 108px 0;
+      scroll-margin-top: calc(var(--nav-h) + 20px);
+      overflow: clip;
+    }
+
+    .section::before,
+    .section::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .section-header {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .section-number {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-3);
+      letter-spacing: 0.18em;
+    }
+
+    .section-number::before {
+      content: "";
+      width: 44px;
+      height: 1px;
+      background: linear-gradient(90deg, currentColor, transparent);
+    }
+
+    .kicker {
+      color: var(--gold);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 4vw, 40px);
+      line-height: 1.2;
+      font-weight: 700;
+      color: var(--text-1);
+      max-width: 16ch;
+    }
+
+    .section-intro {
+      max-width: 72ch;
+      color: var(--text-2);
+    }
+
+    .bridge-text,
+    .closing-text,
+    .focus-quote {
+      font-family: "Kanit", sans-serif;
+      font-size: clamp(22px, 3.4vw, 34px);
+      line-height: 1.45;
+      color: var(--text-1);
+    }
+
+    .muted {
+      color: var(--text-3);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      width: fit-content;
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-2);
+      font-size: 14px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .stat-grid,
+    .icon-grid,
+    .story-grid,
+    .comparison-grid,
+    .hex-grid,
+    .card-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-2,
+    .story-grid,
+    .comparison-grid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .grid-3,
+    .card-grid,
+    .stat-grid,
+    .icon-grid,
+    .hex-grid,
+    .grid-4 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .grid-2 > *,
+    .grid-3 > *,
+    .grid-4 > *,
+    .stat-grid > *,
+    .icon-grid > *,
+    .story-grid > *,
+    .comparison-grid > *,
+    .hex-grid > *,
+    .card-grid > *,
+    .hero-stats > *,
+    .blocks > *,
+    .flow-steps > *,
+    .origin-response-grid > *,
+    .stable-grid > *,
+    .stable-uses > *,
+    .future-grid > *,
+    .btc-vs > *,
+    .ledger-compare > *,
+    .before-after > *,
+    .gold-comparison > *,
+    .web-timeline > *,
+    .flip-grid > * {
+      min-width: 0;
+    }
+
+    .card,
+    .story-card,
+    .stat-card,
+    .icon-card,
+    .info-card,
+    .warning-card,
+    .comparison-card,
+    .timeline-card,
+    .table-shell,
+    .quote-panel,
+    .detail-panel,
+    .pyramid-layer,
+    .flip-card-inner,
+    .scam-card,
+    .law-card,
+    .token-card,
+    .layer-note {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(15, 30, 56, 0.78), rgba(10, 22, 40, 0.96));
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+    }
+
+    .card,
+    .story-card,
+    .stat-card,
+    .icon-card,
+    .info-card,
+    .warning-card,
+    .comparison-card,
+    .timeline-card,
+    .quote-panel,
+    .detail-panel,
+    .law-card,
+    .token-card {
+      padding: 24px;
+    }
+
+    .card h3,
+    .story-card h3,
+    .info-card h3,
+    .comparison-card h3,
+    .timeline-card h3,
+    .law-card h3,
+    .token-card h3,
+    .detail-panel h3,
+    .warning-card h3,
+    .flip-card-face h3,
+    .pyramid-layer h3,
+    .hex-item h3,
+    .step-card h3,
+    .mini-card h3 {
+      font-size: clamp(18px, 2.5vw, 24px);
+      line-height: 1.3;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 12px;
+    }
+
+    .card p + p,
+    .story-card p + p,
+    .info-card p + p,
+    .timeline-card p + p,
+    .detail-panel p + p,
+    .comparison-card p + p,
+    .warning-card p + p,
+    .token-card p + p,
+    .law-card p + p {
+      margin-top: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      max-width: 100%;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-1);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.35;
+      text-align: center;
+      justify-content: center;
+      white-space: normal;
+    }
+
+    .count-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      height: 48px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: rgba(247, 147, 26, 0.14);
+      color: var(--gold);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: clamp(26px, 4vw, 48px);
+      line-height: 1.05;
+      color: var(--text-1);
+      font-weight: 800;
+      margin-bottom: 8px;
+      text-wrap: balance;
+    }
+
+    .stat-label {
+      color: var(--text-3);
+      font-size: 16px;
+    }
+
+    .highlight {
+      color: var(--gold);
+    }
+
+    .positive {
+      color: var(--green);
+    }
+
+    .negative {
+      color: var(--red);
+    }
+
+    .note-bar {
+      display: grid;
+      gap: 12px;
+      padding: 20px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-left: 4px solid var(--gold);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .note-bar strong {
+      color: var(--text-1);
+    }
+
+    .list-clean {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .list-clean li {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .list-clean li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--gold), rgba(247, 147, 26, 0.2));
+      box-shadow: 0 0 18px rgba(247, 147, 26, 0.24);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition:
+        opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 650ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 350ms ease,
+        box-shadow 350ms ease;
+      will-change: transform, opacity;
+    }
+
+    .card.reveal,
+    .story-card.reveal,
+    .stat-card.reveal,
+    .icon-card.reveal,
+    .info-card.reveal,
+    .warning-card.reveal,
+    .comparison-card.reveal,
+    .timeline-card.reveal,
+    .detail-panel.reveal,
+    .law-card.reveal,
+    .token-card.reveal,
+    .hex-item.reveal,
+    .step-card.reveal,
+    .mini-card.reveal,
+    .flip-card.reveal {
+      transform: translateY(36px) scale(0.93);
+    }
+
+    .revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .stagger > * {
+      transition-delay: calc(var(--i, 0) * 90ms);
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(3, 6, 15, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: var(--nav-h);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffb85b, var(--gold));
+      color: #231200;
+      font-size: 28px;
+      font-weight: 800;
+      box-shadow: 0 0 28px rgba(247, 147, 26, 0.45);
+    }
+
+    .brand-text {
+      font-family: "Kanit", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-1);
+      max-width: 13ch;
+      text-wrap: balance;
+    }
+
+    .nav-toggle {
+      display: inline-grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-toggle span,
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-1);
+      transition: transform 250ms ease, opacity 250ms ease;
+      content: "";
+    }
+
+    .nav-toggle span::before {
+      transform: translateY(-7px);
+    }
+
+    .nav-toggle span::after {
+      transform: translateY(5px);
+    }
+
+    .nav-toggle[aria-expanded="true"] span {
+      background: transparent;
+    }
+
+    .nav-toggle[aria-expanded="true"] span::before {
+      transform: translateY(0) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] span::after {
+      transform: translateY(-2px) rotate(-45deg);
+    }
+
+    .nav-links {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 16px;
+      right: 16px;
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(3, 6, 15, 0.96);
+      box-shadow: var(--shadow-soft);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-12px);
+      transition: opacity 250ms ease, transform 250ms ease, visibility 250ms ease;
+      max-height: calc(100vh - var(--nav-h) - 40px);
+      overflow: auto;
+    }
+
+    .nav-links.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 16px;
+      border-radius: 16px;
+      color: var(--text-2);
+      background: rgba(255, 255, 255, 0.02);
+      transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+      font-size: 16px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background: rgba(247, 147, 26, 0.12);
+      color: var(--text-1);
+      transform: translateX(4px);
+      outline: none;
+    }
+
+    .nav-links a span {
+      color: var(--text-3);
+      font-size: 14px;
+    }
+
+    .progress-track {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.04);
+      z-index: 999;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+      box-shadow: 0 0 14px rgba(0, 212, 170, 0.25);
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 900;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffb85b, var(--gold));
+      color: #231200;
+      font-size: 26px;
+      font-weight: 800;
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding-top: calc(var(--nav-h) + 40px);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(247, 147, 26, 0.18), transparent 22%),
+        radial-gradient(circle at 80% 18%, rgba(59, 130, 246, 0.18), transparent 30%),
+        linear-gradient(180deg, #04070f 0%, #02050c 100%);
+    }
+
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.86;
+    }
+
+    .hero::before {
+      top: 18%;
+      right: 10%;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(247, 147, 26, 0.18), transparent 66%);
+      filter: blur(18px);
+    }
+
+    .hero::after {
+      left: -80px;
+      bottom: -100px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.18), transparent 62%);
+      filter: blur(10px);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      justify-items: center;
+      text-align: center;
+      gap: 28px;
+      padding-bottom: 60px;
+    }
+
+    .hero-emblem {
+      width: 132px;
+      height: 132px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #ffcf8c, var(--gold));
+      color: #2a1500;
+      font-family: "Kanit", sans-serif;
+      font-size: 72px;
+      font-weight: 800;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 0 44px rgba(247, 147, 26, 0.4),
+        0 0 86px rgba(247, 147, 26, 0.16);
+      animation: heroPulse 3s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 60px);
+      line-height: 1.04;
+      font-weight: 800;
+      max-width: 13ch;
+      text-wrap: balance;
+    }
+
+    .hero h2 {
+      font-family: "Kanit", sans-serif;
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 600;
+      color: var(--text-2);
+      max-width: 20ch;
+      line-height: 1.4;
+    }
+
+    .hero-intro {
+      max-width: 36ch;
+      color: var(--text-2);
+    }
+
+    .hero-stats {
+      width: min(100%, 960px);
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .hero .stat-card {
+      background: linear-gradient(180deg, rgba(10, 22, 40, 0.78), rgba(6, 13, 26, 0.95));
+      text-align: left;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-grid;
+      justify-items: center;
+      gap: 10px;
+      color: var(--text-3);
+      font-size: 14px;
+      z-index: 2;
+    }
+
+    .scroll-indicator .mouse {
+      width: 28px;
+      height: 48px;
+      border: 2px solid rgba(255, 255, 255, 0.26);
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .scroll-indicator .mouse::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 4px;
+      height: 10px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: var(--gold);
+      animation: scrollBounce 1.5s ease-in-out infinite;
+    }
+
+    .theme-history {
+      background:
+        radial-gradient(circle at 85% 12%, rgba(247, 147, 26, 0.14), transparent 26%),
+        linear-gradient(180deg, #050c17 0%, #091223 100%);
+    }
+
+    .theme-history::before {
+      top: 20%;
+      left: -120px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(201, 162, 39, 0.16), transparent 68%);
+      filter: blur(24px);
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(247, 147, 26, 0.5), rgba(59, 130, 246, 0.08));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 52px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 24px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(247, 147, 26, 0.14);
+    }
+
+    .timeline-item.revealed::before {
+      animation: nodePulse 1.8s ease-out infinite;
+    }
+
+    .timeline-card {
+      overflow: hidden;
+    }
+
+    .timeline-card .period {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: var(--gold);
+      font-family: "Kanit", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .timeline-card .period::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.5;
+    }
+
+    .timeline-card ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .timeline-card li {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(247, 147, 26, 0.9);
+    }
+
+    .history-bridge {
+      margin-top: 42px;
+      padding: 26px 28px;
+      border: 1px solid rgba(247, 147, 26, 0.16);
+      border-radius: 24px;
+      background: rgba(247, 147, 26, 0.05);
+    }
+
+    .theme-problems {
+      background:
+        radial-gradient(circle at 10% 10%, rgba(239, 68, 68, 0.12), transparent 20%),
+        radial-gradient(circle at 90% 20%, rgba(247, 147, 26, 0.12), transparent 24%),
+        linear-gradient(180deg, #0b0b12 0%, #120c0f 40%, #09070d 100%);
+    }
+
+    .theme-problems::after {
+      right: -120px;
+      bottom: -120px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.14), transparent 66%);
+      filter: blur(24px);
+    }
+
+    .problem-stack {
+      display: grid;
+      gap: 28px;
+    }
+
+    .problem-panel {
+      position: relative;
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(239, 68, 68, 0.16);
+      background: linear-gradient(180deg, rgba(18, 12, 15, 0.92), rgba(9, 7, 13, 0.96));
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .problem-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.06), transparent 30%, transparent 70%, rgba(247, 147, 26, 0.04));
+      pointer-events: none;
+    }
+
+    .substory-header {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .substory-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(239, 68, 68, 0.12);
+      color: #ffb1b1;
+      font-family: "Kanit", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .printer-scene {
+      position: relative;
+      min-height: 220px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
+        rgba(0, 0, 0, 0.18);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .printer {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      width: 180px;
+      height: 110px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #2d3b55, #121a28);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 -12px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .printer::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 144px;
+      height: 30px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .printer-slot {
+      position: absolute;
+      right: -16px;
+      bottom: 26px;
+      width: 86px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .bill-rain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .bill-rain span {
+      position: absolute;
+      width: 92px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 212, 170, 0.25);
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.18), rgba(59, 130, 246, 0.08));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      animation: billFlow 5.4s linear infinite;
+      opacity: 0.82;
+    }
+
+    .bill-rain span::before {
+      content: "$";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: "Kanit", sans-serif;
+      font-size: 26px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .bill-rain span:nth-child(1) { left: 200px; top: 30px; animation-delay: -0.2s; }
+    .bill-rain span:nth-child(2) { left: 280px; top: 68px; animation-delay: -2.1s; }
+    .bill-rain span:nth-child(3) { left: 360px; top: 18px; animation-delay: -3.4s; }
+    .bill-rain span:nth-child(4) { left: 470px; top: 60px; animation-delay: -1.1s; }
+    .bill-rain span:nth-child(5) { left: 580px; top: 24px; animation-delay: -4.5s; }
+    .bill-rain span:nth-child(6) { left: 690px; top: 78px; animation-delay: -2.9s; }
+
+    .purchase-bars {
+      display: grid;
+      gap: 16px;
+    }
+
+    .purchase-bar {
+      display: grid;
+      gap: 10px;
+    }
+
+    .purchase-bar .bar-shell {
+      position: relative;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .purchase-bar .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--red));
+      box-shadow: 0 0 24px rgba(247, 147, 26, 0.22);
+      transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cantillon-flow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      transform: translateX(-18px);
+      opacity: 0;
+    }
+
+    .revealed .flow-item {
+      animation: flowReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 90ms);
+    }
+
+    .flow-item .order {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(247, 147, 26, 0.14);
+      color: var(--gold);
+      font-family: "Kanit", sans-serif;
+      font-weight: 700;
+    }
+
+    .flow-item strong {
+      color: var(--text-1);
+    }
+
+    .flow-item .advantage {
+      color: #ffb1b1;
+      font-size: 15px;
+    }
+
+    .justice-scale {
+      position: relative;
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.18);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .scale-center {
+      position: absolute;
+      width: 8px;
+      height: 120px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.16));
+    }
+
+    .scale-arm {
+      position: absolute;
+      width: min(70%, 520px);
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.18));
+      transform: rotate(-8deg);
+      animation: tiltScale 5.5s ease-in-out infinite;
+    }
+
+    .scale-pan {
+      position: absolute;
+      top: calc(50% + 24px);
+      width: min(108px, 30vw);
+      height: 58px;
+      padding: 0 10px;
+      border-radius: 999px 999px 32px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
+      display: grid;
+      place-items: center;
+      font-family: "Kanit", sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .scale-pan.left {
+      left: 8%;
+      transform: translateY(8px);
+      color: #ffd4d4;
+    }
+
+    .scale-pan.right {
+      right: 8%;
+      transform: translateY(-16px);
+      color: #ffe1b7;
+    }
+
+    .trap-loop {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .trap-loop-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .trap-node {
+      min-height: 120px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      animation: trapGlow 3s ease-in-out infinite;
+      animation-delay: calc(var(--i, 0) * 0.4s);
+    }
+
+    .trap-node strong {
+      color: var(--text-1);
+    }
+
+    .theme-origin {
+      background:
+        radial-gradient(circle at 18% 15%, rgba(247, 147, 26, 0.16), transparent 22%),
+        linear-gradient(180deg, #050914 0%, #070f1c 100%);
+    }
+
+    .origin-story {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .quote-panel {
+      padding: 28px;
+      margin: 28px 0 40px;
+      border: 1px solid rgba(247, 147, 26, 0.24);
+      background: linear-gradient(180deg, rgba(247, 147, 26, 0.06), rgba(10, 22, 40, 0.9));
+    }
+
+    .quote-panel blockquote {
+      font-family: "Kanit", sans-serif;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.35;
+      color: var(--text-1);
+      min-height: 2.9em;
+      white-space: pre-wrap;
+    }
+
+    .quote-panel .quote-caption {
+      margin-top: 18px;
+      color: var(--text-3);
+    }
+
+    .origin-timeline {
+      display: grid;
+      gap: 22px;
+      margin-bottom: 40px;
+    }
+
+    .origin-event {
+      position: relative;
+      padding-left: 46px;
+    }
+
+    .origin-event::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      top: 24px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(247, 147, 26, 0.14);
+    }
+
+    .origin-event::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 24px;
+      bottom: -28px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(247, 147, 26, 0.4), transparent);
+    }
+
+    .origin-event:last-child::after {
+      display: none;
+    }
+
+    .origin-event.revealed::before {
+      animation: nodePulse 1.8s ease-out infinite;
+    }
+
+    .origin-response-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .response-card {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(247, 147, 26, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .response-card .arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Kanit", sans-serif;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .theme-blockchain {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(59, 130, 246, 0.18), transparent 22%),
+        linear-gradient(180deg, #040912 0%, #071120 100%);
+    }
+
+    .theme-blockchain::after {
+      right: -120px;
+      top: 22%;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 212, 170, 0.16), transparent 68%);
+      filter: blur(30px);
+    }
+
+    .ledger-compare {
+      display: grid;
+      gap: 20px;
+      margin-bottom: 28px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .ledger-card {
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      display: grid;
+      gap: 16px;
+    }
+
+    .ledger-card.central {
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08), rgba(10, 22, 40, 0.9));
+    }
+
+    .ledger-card.distributed {
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.08), rgba(10, 22, 40, 0.9));
+    }
+
+    .mini-ledger {
+      min-height: 140px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-ledger.central::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .mini-ledger.distributed {
+      display: grid;
+      place-items: center;
+    }
+
+    .node-cloud {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .node-cloud span {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #8de7ff, rgba(59, 130, 246, 0.8));
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.35);
+    }
+
+    .node-cloud span:nth-child(1) { left: 16%; top: 28%; }
+    .node-cloud span:nth-child(2) { left: 34%; top: 52%; }
+    .node-cloud span:nth-child(3) { left: 50%; top: 22%; }
+    .node-cloud span:nth-child(4) { left: 68%; top: 58%; }
+    .node-cloud span:nth-child(5) { left: 82%; top: 34%; }
+    .node-cloud span:nth-child(6) { left: 44%; top: 72%; }
+
+    .node-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.65;
+    }
+
+    .blockchain-demo {
+      display: grid;
+      gap: 24px;
+      margin-top: 34px;
+      padding: 30px;
+      border-radius: 30px;
+      border: 1px solid rgba(59, 130, 246, 0.16);
+      background: linear-gradient(180deg, rgba(9, 18, 34, 0.96), rgba(6, 13, 26, 0.96));
+      box-shadow: var(--shadow-soft), 0 0 60px rgba(59, 130, 246, 0.08);
+    }
+
+    .demo-controls {
+      display: grid;
+      gap: 14px;
+    }
+
+    .demo-controls textarea {
+      width: 100%;
+      min-height: 118px;
+      border-radius: 18px;
+      padding: 16px 18px;
+      border: 1px solid var(--border-2);
+      background: rgba(255, 255, 255, 0.04);
+      resize: vertical;
+    }
+
+    .demo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold), #ffb85b);
+      color: #241400;
+      font-family: "Kanit", sans-serif;
+      font-weight: 700;
+      text-align: center;
+      white-space: normal;
+      transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+      box-shadow: 0 14px 24px rgba(247, 147, 26, 0.22);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+      outline: none;
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-1);
+      box-shadow: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .demo-status {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.14);
+      color: #b7d5ff;
+    }
+
+    .blocks {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .block-card {
+      position: relative;
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(59, 130, 246, 0.14);
+      background: linear-gradient(180deg, rgba(15, 30, 56, 0.88), rgba(8, 18, 34, 0.98));
+      overflow: hidden;
+      transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+    }
+
+    .block-card.invalid {
+      border-color: rgba(239, 68, 68, 0.64);
+      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.22), 0 0 40px rgba(239, 68, 68, 0.12);
+    }
+
+    .block-card::before {
+      content: "";
+      position: absolute;
+      inset: -30% auto auto -30%;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12), transparent 60%);
+    }
+
+    .block-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .block-id {
+      font-family: "Kanit", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #96d8ff;
+    }
+
+    .block-body {
+      display: grid;
+      gap: 10px;
+    }
+
+    .block-field {
+      display: grid;
+      gap: 4px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .block-field span {
+      color: var(--text-3);
+      font-size: 14px;
+    }
+
+    .block-field strong,
+    .block-field code {
+      color: var(--text-1);
+      font-size: 16px;
+      word-break: break-word;
+    }
+
+    .hash-explainer {
+      margin-top: 26px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .fingerprint {
+      min-height: 190px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fingerprint::before,
+    .fingerprint::after {
+      content: "";
+      position: absolute;
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 50%;
+      inset: 24px;
+    }
+
+    .fingerprint::after {
+      inset: 44px;
+      border-color: rgba(0, 212, 170, 0.3);
+      transform: rotate(16deg);
+    }
+
+    .fingerprint .swirl {
+      width: 120px;
+      height: 120px;
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      border-radius: 54% 46% 50% 50% / 46% 54% 46% 54%;
+      position: relative;
+      animation: swirlPulse 4s ease-in-out infinite;
+    }
+
+    .fingerprint .swirl::before,
+    .fingerprint .swirl::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      border-radius: inherit;
+    }
+
+    .fingerprint .swirl::after {
+      inset: 36px;
+    }
+
+    .pow-pos {
+      margin-top: 26px;
+    }
+
+    .pros-cons {
+      margin-top: 26px;
+    }
+
+    .pros-cons .card {
+      height: 100%;
+    }
+
+    .pros-cons .badge {
+      margin-bottom: 16px;
+    }
+
+    .theme-separation {
+      background:
+        radial-gradient(circle at 15% 10%, rgba(0, 212, 170, 0.16), transparent 22%),
+        linear-gradient(180deg, #061117 0%, #071722 100%);
+    }
+
+    .road-scene {
+      position: relative;
+      min-height: 300px;
+      border-radius: 28px;
+      border: 1px solid rgba(0, 212, 170, 0.14);
+      background: linear-gradient(180deg, rgba(0, 212, 170, 0.04), rgba(6, 13, 26, 0.94));
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .road-lane {
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: 48px;
+      height: 72px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .road-lane::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 6px;
+      transform: translateY(-50%);
+      background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0 28px, transparent 28px 58px);
+      opacity: 0.6;
+      animation: laneMove 4s linear infinite;
+    }
+
+    .road-car {
+      position: absolute;
+      bottom: 58px;
+      left: -20%;
+      width: 118px;
+      height: 44px;
+      border-radius: 18px 22px 14px 14px;
+      background: linear-gradient(135deg, var(--gold), #ffcc74);
+      box-shadow: 0 0 24px rgba(247, 147, 26, 0.28);
+      animation: carMove 6.6s linear infinite;
+    }
+
+    .road-car::before,
+    .road-car::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #101828;
+      border: 3px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .road-car::before { left: 16px; }
+    .road-car::after { right: 16px; }
+
+    .road-sign {
+      position: absolute;
+      top: 114px;
+      left: 8%;
+      padding: 8px 12px;
+      border-radius: 16px;
+      background: rgba(59, 130, 246, 0.16);
+      color: #d6e8ff;
+      font-family: "Kanit", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .road-city {
+      position: absolute;
+      right: 4%;
+      bottom: 126px;
+      width: min(150px, 42vw);
+      height: 72px;
+      background:
+        linear-gradient(90deg, transparent 0 20%, rgba(255, 255, 255, 0.12) 20% 28%, transparent 28% 36%, rgba(255, 255, 255, 0.12) 36% 48%, transparent 48% 56%, rgba(255, 255, 255, 0.12) 56% 64%, transparent 64% 72%, rgba(255, 255, 255, 0.12) 72% 82%, transparent 82%);
+      opacity: 0.85;
+      mask: linear-gradient(180deg, transparent 0, black 28%);
+    }
+
+    .road-labels {
+      position: absolute;
+      inset: 16px 16px auto 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+      gap: 10px;
+      align-content: start;
+      pointer-events: none;
+    }
+
+    .road-labels .badge {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    .road-labels .badge:nth-child(1),
+    .road-labels .badge:nth-child(2),
+    .road-labels .badge:nth-child(3),
+    .road-labels .badge:nth-child(4) {
+      justify-self: stretch;
+    }
+
+    .table-shell {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .comparison-table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+    }
+
+    .comparison-table-wide {
+      min-width: 860px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .comparison-table th:first-child,
+    .comparison-table td:first-child {
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+      border-top-left-radius: 18px;
+      border-bottom-left-radius: 18px;
+    }
+
+    .comparison-table th:last-child,
+    .comparison-table td:last-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+      border-top-right-radius: 18px;
+      border-bottom-right-radius: 18px;
+    }
+
+    .comparison-table thead th {
+      color: var(--text-1);
+      font-family: "Kanit", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .comparison-table tbody tr {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .table-shell.revealed tbody tr {
+      animation: rowReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 90ms);
+    }
+
+    .typewriter {
+      position: relative;
+      white-space: pre-wrap;
+    }
+
+    .typewriter.done::after {
+      display: none;
+    }
+
+    .typewriter::after {
+      content: "";
+      display: inline-block;
+      width: 0.1em;
+      height: 1.05em;
+      vertical-align: text-bottom;
+      background: currentColor;
+      margin-left: 0.08em;
+      animation: caretBlink 1s steps(1) infinite;
+    }
+
+    .theme-mechanics {
+      background:
+        radial-gradient(circle at 85% 10%, rgba(139, 92, 246, 0.18), transparent 22%),
+        linear-gradient(180deg, #090811 0%, #120a1d 100%);
+    }
+
+    .transaction-flow {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .flow-steps {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .step-card {
+      position: relative;
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(139, 92, 246, 0.16);
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.08), rgba(10, 22, 40, 0.94));
+      overflow: hidden;
+    }
+
+    .step-card::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -12px;
+      width: 2px;
+      height: 24px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(247, 147, 26, 0.5), transparent);
+    }
+
+    .step-card:last-child::after {
+      display: none;
+    }
+
+    .step-card .step-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 14px;
+      border-radius: 50%;
+      background: rgba(247, 147, 26, 0.12);
+      color: var(--gold);
+      font-family: "Kanit", sans-serif;
+      font-weight: 700;
+    }
+
+    .mailbox-visual {
+      min-height: 230px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .mailbox {
+      width: 180px;
+      height: 124px;
+      border-radius: 28px 28px 22px 22px;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.92), rgba(59, 130, 246, 0.54));
+      position: relative;
+      box-shadow: 0 18px 28px rgba(59, 130, 246, 0.18);
+    }
+
+    .mailbox::before {
+      content: "Public Key";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: "Kanit", sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #04111d;
+    }
+
+    .mailbox-slot {
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      width: 100px;
+      height: 8px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: rgba(4, 17, 29, 0.5);
+    }
+
+    .mailbox-key {
+      position: absolute;
+      bottom: 24px;
+      right: 12%;
+      width: 120px;
+      height: 46px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold), #ffd486);
+      transform: rotate(-10deg);
+    }
+
+    .mailbox-key::before {
+      content: "Private Key";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: "Kanit", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #251400;
+    }
+
+    .rules-grid {
+      margin-top: 28px;
+    }
+
+    .warning-card.red { border-color: rgba(239, 68, 68, 0.22); background: linear-gradient(180deg, rgba(239, 68, 68, 0.08), rgba(10, 22, 40, 0.94)); }
+    .warning-card.yellow { border-color: rgba(247, 147, 26, 0.22); background: linear-gradient(180deg, rgba(247, 147, 26, 0.08), rgba(10, 22, 40, 0.94)); }
+    .warning-card.green { border-color: rgba(34, 197, 94, 0.22); background: linear-gradient(180deg, rgba(34, 197, 94, 0.08), rgba(10, 22, 40, 0.94)); }
+
+    .warning-card .icon {
+      display: inline-grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      font-size: 26px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hex-grid {
+      margin-top: 26px;
+      gap: 22px;
+    }
+
+    .hex-item {
+      position: relative;
+      padding: 28px 20px;
+      clip-path: polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0 50%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+      min-height: 210px;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      gap: 10px;
+      padding-inline: 28px;
+    }
+
+    .hex-item .hex-icon {
+      font-size: 34px;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .theme-btc {
+      background:
+        radial-gradient(circle at 85% 14%, rgba(247, 147, 26, 0.16), transparent 24%),
+        linear-gradient(180deg, #09070b 0%, #130d08 100%);
+    }
+
+    .gold-panel {
+      padding: 30px;
+      border-radius: 30px;
+      border: 1px solid rgba(247, 147, 26, 0.18);
+      background: linear-gradient(180deg, rgba(247, 147, 26, 0.06), rgba(10, 22, 40, 0.94));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .gold-comparison {
+      display: grid;
+      gap: 18px;
+      margin-top: 24px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .mini-card {
+      padding: 22px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .btc-vs {
+      margin-top: 28px;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .theme-defi {
+      background:
+        radial-gradient(circle at 12% 10%, rgba(139, 92, 246, 0.18), transparent 24%),
+        linear-gradient(180deg, #080510 0%, #11071a 100%);
+    }
+
+    .vending-machine {
+      min-height: 270px;
+      position: relative;
+      border-radius: 30px;
+      border: 1px solid rgba(139, 92, 246, 0.18);
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.08), rgba(10, 22, 40, 0.94));
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .vending-body {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(100%, 300px);
+      height: 210px;
+      transform: translate(-50%, -50%);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(15, 30, 56, 0.9), rgba(6, 13, 26, 0.96));
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .vending-window {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: 160px;
+      height: 110px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      overflow: hidden;
+    }
+
+    .vending-window span {
+      position: absolute;
+      bottom: -20px;
+      width: 32px;
+      height: 54px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(0, 212, 170, 0.8), rgba(59, 130, 246, 0.45));
+      animation: canRise 4.8s ease-in-out infinite;
+    }
+
+    .vending-window span:nth-child(1) { left: 14px; animation-delay: -0.5s; }
+    .vending-window span:nth-child(2) { left: 62px; animation-delay: -1.7s; }
+    .vending-window span:nth-child(3) { left: 110px; animation-delay: -3.1s; }
+
+    .coin-slot {
+      position: absolute;
+      right: 24px;
+      top: 42px;
+      width: 70px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .coin-drop {
+      position: absolute;
+      right: 38px;
+      top: 18px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffd07c, var(--gold));
+      color: #221300;
+      font-family: "Kanit", sans-serif;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      animation: coinDrop 3.8s ease-in-out infinite;
+    }
+
+    .output-slot {
+      position: absolute;
+      bottom: 24px;
+      left: 22px;
+      right: 22px;
+      height: 40px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .pyramid {
+      display: grid;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .pyramid.revealed .pyramid-layer {
+      animation: stackRise 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 120ms);
+    }
+
+    .pyramid-layer {
+      opacity: 0;
+      transform: translateY(36px);
+      padding: 20px 24px;
+      cursor: pointer;
+      transition: border-color 220ms ease, background 220ms ease;
+    }
+
+    .pyramid-layer.active {
+      border-color: rgba(139, 92, 246, 0.48);
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.14), rgba(10, 22, 40, 0.94));
+    }
+
+    .pyramid-layer .layer-note {
+      display: none;
+      margin-top: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .pyramid-layer.active .layer-note {
+      display: block;
+    }
+
+    .mint-burn {
+      margin-top: 34px;
+    }
+
+    .factory-scene,
+    .burn-scene {
+      min-height: 220px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .factory-scene::before {
+      content: "";
+      position: absolute;
+      left: 24px;
+      bottom: 28px;
+      width: 140px;
+      height: 100px;
+      border-radius: 16px 16px 0 0;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.7), rgba(59, 130, 246, 0.2));
+    }
+
+    .factory-scene::after {
+      content: "";
+      position: absolute;
+      left: 52px;
+      bottom: 116px;
+      width: 28px;
+      height: 64px;
+      border-radius: 12px 12px 0 0;
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 50px 0 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .factory-coin,
+    .burn-coin {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffda91, var(--gold));
+      display: grid;
+      place-items: center;
+      color: #241400;
+      font-family: "Kanit", sans-serif;
+      font-weight: 800;
+    }
+
+    .factory-coin {
+      top: 38px;
+      left: 210px;
+      animation: mintFloat 4s ease-in-out infinite;
+      box-shadow: 0 12px 20px rgba(247, 147, 26, 0.2);
+    }
+
+    .factory-coin.coin-2 { left: 300px; animation-delay: -1.2s; }
+    .factory-coin.coin-3 { left: 390px; animation-delay: -2.4s; }
+
+    .burn-scene {
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08), rgba(10, 22, 40, 0.94));
+    }
+
+    .flames {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 96px;
+      background:
+        radial-gradient(circle at 10% 70%, rgba(247, 147, 26, 0.82), transparent 28%),
+        radial-gradient(circle at 30% 60%, rgba(239, 68, 68, 0.92), transparent 26%),
+        radial-gradient(circle at 52% 76%, rgba(247, 147, 26, 0.88), transparent 32%),
+        radial-gradient(circle at 72% 58%, rgba(239, 68, 68, 0.9), transparent 26%),
+        radial-gradient(circle at 90% 78%, rgba(247, 147, 26, 0.84), transparent 28%);
+      filter: blur(8px);
+      animation: flameShift 2.8s ease-in-out infinite;
+    }
+
+    .burn-coin {
+      top: 42px;
+      left: 24%;
+      animation: burnDrop 4s ease-in-out infinite;
+    }
+
+    .burn-coin.coin-2 { left: 45%; animation-delay: -1.2s; }
+    .burn-coin.coin-3 { left: 66%; animation-delay: -2.4s; }
+
+    .highway-scene {
+      margin-top: 30px;
+      min-height: 230px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highway-main {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 26px;
+      height: 74px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .highway-main::before,
+    .highway-city::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 6px;
+      transform: translateY(-50%);
+      background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.62) 0 26px, transparent 26px 54px);
+      opacity: 0.6;
+      animation: laneMove 3.8s linear infinite;
+    }
+
+    .highway-city {
+      position: absolute;
+      left: 56%;
+      right: 12%;
+      top: 34px;
+      height: 54px;
+      border-radius: 999px;
+      background: rgba(0, 212, 170, 0.14);
+    }
+
+    .highway-main .packet,
+    .highway-city .packet {
+      position: absolute;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff, var(--gold));
+      box-shadow: 0 0 18px rgba(247, 147, 26, 0.35);
+      transform: translateY(-50%);
+      animation: packetMove 3.4s linear infinite;
+    }
+
+    .highway-city .packet {
+      background: radial-gradient(circle, #d7fff4, var(--teal));
+      box-shadow: 0 0 18px rgba(0, 212, 170, 0.35);
+      animation-duration: 2.2s;
+    }
+
+    .theme-stable {
+      background:
+        linear-gradient(90deg, rgba(59, 130, 246, 0.08) 0 48%, rgba(247, 147, 26, 0.07) 48% 100%),
+        linear-gradient(180deg, #06101d 0%, #0c1018 100%);
+    }
+
+    .stable-grid,
+    .stable-uses,
+    .future-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .split-note {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      margin-top: 24px;
+    }
+
+    .theme-thai {
+      background:
+        radial-gradient(circle at 15% 10%, rgba(0, 212, 170, 0.18), transparent 24%),
+        linear-gradient(180deg, #061512 0%, #07161f 100%);
+    }
+
+    .story-card.large {
+      padding: 24px;
+      border-radius: 24px;
+    }
+
+    .map-card {
+      display: grid;
+      gap: 22px;
+    }
+
+    .remit-map {
+      min-height: 260px;
+      border-radius: 28px;
+      border: 1px solid rgba(0, 212, 170, 0.18);
+      background: linear-gradient(180deg, rgba(0, 212, 170, 0.04), rgba(10, 22, 40, 0.94));
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .remit-map svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-line {
+      stroke-dasharray: 620;
+      stroke-dashoffset: 620;
+    }
+
+    .remit-map.revealed .map-line {
+      animation: mapDraw 2.2s ease forwards;
+    }
+
+    .flag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 15px;
+    }
+
+    .before-after {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .before-after .panel {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .before-after .panel.before {
+      border-color: rgba(239, 68, 68, 0.18);
+    }
+
+    .before-after .panel.after {
+      border-color: rgba(0, 212, 170, 0.18);
+    }
+
+    .stats-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .stats-inline .badge {
+      background: rgba(0, 212, 170, 0.08);
+    }
+
+    .theme-web3 {
+      background:
+        radial-gradient(circle at 82% 8%, rgba(139, 92, 246, 0.18), transparent 24%),
+        linear-gradient(180deg, #070911 0%, #081221 100%);
+    }
+
+    .web-timeline {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+
+    .web-step {
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+    }
+
+    .web-step::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -16px;
+      width: 2px;
+      height: 24px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.5), transparent);
+    }
+
+    .web-step:last-child::after {
+      display: none;
+    }
+
+    .theme-scam {
+      background:
+        radial-gradient(circle at 12% 12%, rgba(239, 68, 68, 0.18), transparent 20%),
+        linear-gradient(180deg, #0c0507 0%, #14070b 100%);
+      border-top: 1px solid rgba(239, 68, 68, 0.12);
+      border-bottom: 1px solid rgba(239, 68, 68, 0.12);
+    }
+
+    .warning-shell {
+      padding: 30px;
+      border-radius: 30px;
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08), rgba(16, 7, 11, 0.98));
+      animation: redPulseBorder 2.6s ease-in-out infinite;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .red-flag-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .red-flag-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: start;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .warning-shell.revealed .red-flag-item {
+      animation: rowReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 90ms);
+    }
+
+    .red-flag-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.16);
+      color: #ffcccc;
+      font-family: "Kanit", sans-serif;
+      font-weight: 800;
+    }
+
+    .flip-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 28px;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .flip-card {
+      perspective: 1200px;
+      min-height: 300px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    }
+
+    .flip-card-face {
+      position: absolute;
+      inset: 0;
+      padding: 24px;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 280ms ease;
+    }
+
+    .flip-card-face.front {
+      transform: rotateY(0deg);
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .flip-card-face.back {
+      transform: rotateY(180deg);
+      opacity: 0;
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08), rgba(10, 22, 40, 0.92));
+    }
+
+    .flip-card:hover .flip-card-face.front,
+    .flip-card.flipped .flip-card-face.front {
+      transform: rotateY(-180deg);
+      opacity: 0;
+    }
+
+    .flip-card:hover .flip-card-face.back,
+    .flip-card.flipped .flip-card-face.back {
+      transform: rotateY(0deg);
+      opacity: 1;
+    }
+
+    .flip-card .loss {
+      font-family: "Kanit", sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffd0d0;
+    }
+
+    .tool-grid {
+      margin-top: 28px;
+    }
+
+    .theme-future {
+      background:
+        radial-gradient(circle at 16% 12%, rgba(247, 147, 26, 0.18), transparent 20%),
+        radial-gradient(circle at 82% 14%, rgba(59, 130, 246, 0.16), transparent 24%),
+        linear-gradient(180deg, #05070f 0%, #071120 100%);
+    }
+
+    .future-timeline {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .future-event {
+      padding: 20px 22px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .future-timeline.revealed .future-event {
+      animation: rowReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 90ms);
+    }
+
+    .dyor-box {
+      margin-top: 38px;
+      padding: 30px;
+      border-radius: 30px;
+      border: 1px solid rgba(247, 147, 26, 0.32);
+      background: linear-gradient(180deg, rgba(247, 147, 26, 0.06), rgba(10, 22, 40, 0.95));
+      animation: goldPulseBorder 3s ease-in-out infinite;
+    }
+
+    .dyor-points {
+      display: grid;
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .dyor-points .point {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .dyor-box.revealed .point {
+      animation: rowReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 90ms);
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      text-align: center;
+      color: var(--text-3);
+      background: rgba(3, 6, 15, 0.7);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    @keyframes heroPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 44px rgba(247, 147, 26, 0.4), 0 0 86px rgba(247, 147, 26, 0.16); }
+      50% { transform: scale(1.03); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 54px rgba(247, 147, 26, 0.5), 0 0 96px rgba(247, 147, 26, 0.22); }
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.8; }
+      50% { transform: translateX(-50%) translateY(12px); opacity: 0.2; }
+    }
+
+    @keyframes nodePulse {
+      0% { box-shadow: 0 0 0 0 rgba(247, 147, 26, 0.4); }
+      70% { box-shadow: 0 0 0 16px rgba(247, 147, 26, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(247, 147, 26, 0); }
+    }
+
+    @keyframes billFlow {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(70px, 40px) rotate(8deg); }
+      100% { transform: translate(140px, 90px) rotate(14deg); opacity: 0; }
+    }
+
+    @keyframes flowReveal {
+      from { opacity: 0; transform: translateX(-18px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes tiltScale {
+      0%, 100% { transform: rotate(-8deg); }
+      50% { transform: rotate(-12deg); }
+    }
+
+    @keyframes trapGlow {
+      0%, 100% { border-color: rgba(255, 255, 255, 0.06); box-shadow: none; }
+      50% { border-color: rgba(239, 68, 68, 0.22); box-shadow: 0 0 24px rgba(239, 68, 68, 0.08); }
+    }
+
+    @keyframes swirlPulse {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.04) rotate(10deg); }
+    }
+
+    @keyframes laneMove {
+      from { background-position: 0 0; }
+      to { background-position: 120px 0; }
+    }
+
+    @keyframes carMove {
+      0% { left: -22%; }
+      100% { left: 110%; }
+    }
+
+    @keyframes rowReveal {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes caretBlink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+
+    @keyframes canRise {
+      0%, 100% { transform: translateY(30px); }
+      50% { transform: translateY(-18px); }
+    }
+
+    @keyframes coinDrop {
+      0%, 100% { transform: translateY(-8px); }
+      40% { transform: translateY(28px); }
+      55% { transform: translateY(28px) scale(0.92); }
+      70% { transform: translateY(-2px); }
+    }
+
+    @keyframes stackRise {
+      from { opacity: 0; transform: translateY(36px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes mintFloat {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.2; }
+      20% { opacity: 1; }
+      50% { transform: translateY(70px) scale(1.04); opacity: 1; }
+      80% { opacity: 0.3; }
+    }
+
+    @keyframes flameShift {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(1.05) translateY(-6px); }
+    }
+
+    @keyframes burnDrop {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.95; }
+      55% { transform: translateY(120px) scale(0.85); opacity: 0.95; }
+      80% { transform: translateY(132px) scale(0.2); opacity: 0; }
+    }
+
+    @keyframes packetMove {
+      0% { left: -4%; }
+      100% { left: 102%; }
+    }
+
+    @keyframes mapDraw {
+      from { stroke-dashoffset: 620; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes redPulseBorder {
+      0%, 100% { box-shadow: var(--shadow-soft), 0 0 0 0 rgba(239, 68, 68, 0.12); }
+      50% { box-shadow: var(--shadow-soft), 0 0 0 10px rgba(239, 68, 68, 0); }
+    }
+
+    @keyframes goldPulseBorder {
+      0%, 100% { box-shadow: var(--shadow-soft), 0 0 0 0 rgba(247, 147, 26, 0.18); }
+      50% { box-shadow: var(--shadow-soft), 0 0 0 12px rgba(247, 147, 26, 0); }
+    }
+
+    @media (max-width: 767px) {
+      .section {
+        padding: 92px 0;
+      }
+
+      .section-header {
+        margin-bottom: 40px;
+      }
+
+      .hero {
+        padding-top: calc(var(--nav-h) + 28px);
+      }
+
+      .hero-emblem {
+        width: 108px;
+        height: 108px;
+        font-size: 60px;
+      }
+
+      .quote-panel,
+      .problem-panel,
+      .blockchain-demo,
+      .gold-panel,
+      .warning-shell,
+      .dyor-box {
+        padding: 22px;
+        border-radius: 24px;
+      }
+
+      .flow-item {
+        grid-template-columns: auto 1fr;
+      }
+
+      .flow-item .advantage {
+        grid-column: 2;
+      }
+
+      .demo-actions .button {
+        width: 100%;
+      }
+
+      .remit-map {
+        min-height: 220px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .section {
+        padding: 126px 0;
+      }
+
+      .hero-stats,
+      .origin-response-grid,
+      .gold-comparison,
+      .stable-grid,
+      .stable-uses,
+      .future-grid,
+      .card-grid,
+      .grid-3,
+      .stat-grid,
+      .icon-grid,
+      .hex-grid,
+      .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-2,
+      .story-grid,
+      .comparison-grid,
+      .ledger-compare,
+      .before-after,
+      .btc-vs,
+      .pow-pos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .blocks,
+      .flow-steps,
+      .web-timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .road-labels {
+        inset: 24px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .road-labels .badge:nth-child(1) { justify-self: start; }
+      .road-labels .badge:nth-child(2) { justify-self: center; }
+      .road-labels .badge:nth-child(3) { justify-self: center; }
+      .road-labels .badge:nth-child(4) { justify-self: end; }
+
+      .road-scene {
+        min-height: 240px;
+      }
+
+      .road-sign {
+        top: 40px;
+        left: 14%;
+        padding: 10px 14px;
+        font-size: 15px;
+      }
+
+      .road-city {
+        bottom: 118px;
+        width: 210px;
+        height: 100px;
+      }
+
+      .trap-loop-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .scale-pan {
+        width: 140px;
+        height: 64px;
+        padding: 0;
+        font-size: 18px;
+      }
+
+      .scale-pan.left {
+        left: 16%;
+        transform: translateY(10px);
+      }
+
+      .scale-pan.right {
+        right: 16%;
+        transform: translateY(-24px);
+      }
+
+      .timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .timeline-item {
+        width: 50%;
+        padding-left: 0;
+      }
+
+      .timeline-item:nth-child(odd) {
+        margin-left: 0;
+        padding-right: 34px;
+      }
+
+      .timeline-item:nth-child(even) {
+        margin-left: auto;
+        padding-left: 34px;
+      }
+
+      .timeline-item::before {
+        left: auto;
+        right: -9px;
+      }
+
+      .timeline-item:nth-child(even)::before {
+        left: -9px;
+        right: auto;
+      }
+
+      .origin-event {
+        padding-left: 0;
+        width: 50%;
+      }
+
+      .origin-event:nth-child(odd) {
+        margin-left: 0;
+        padding-right: 34px;
+      }
+
+      .origin-event:nth-child(even) {
+        margin-left: auto;
+        padding-left: 34px;
+      }
+
+      .origin-timeline {
+        position: relative;
+      }
+
+      .origin-timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        transform: translateX(-50%);
+        background: linear-gradient(180deg, rgba(247, 147, 26, 0.5), rgba(59, 130, 246, 0.08));
+      }
+
+      .origin-event::before {
+        left: auto;
+        right: -7px;
+      }
+
+      .origin-event:nth-child(even)::before {
+        left: -7px;
+        right: auto;
+      }
+
+      .origin-event::after {
+        display: none;
+      }
+
+      .blocks {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .flow-steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .step-card::after {
+        left: auto;
+        right: -18px;
+        top: 50%;
+        bottom: auto;
+        width: 36px;
+        height: 2px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg, rgba(247, 147, 26, 0.5), transparent);
+      }
+
+      .hex-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .flip-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .comparison-table-wide {
+        min-width: 0;
+      }
+
+      .hero-stats,
+      .stat-grid,
+      .stable-grid,
+      .stable-uses,
+      .gold-comparison,
+      .future-grid,
+      .card-grid,
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .icon-grid,
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .origin-response-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .flow-steps {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .hex-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .web-timeline {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .web-step::after {
+        left: auto;
+        right: -18px;
+        top: 50%;
+        bottom: auto;
+        width: 36px;
+        height: 2px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg, rgba(139, 92, 246, 0.5), transparent);
+      }
+
+      .flip-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .problem-panel {
+        padding: 34px;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .nav-toggle {
+        display: none;
+      }
+
+      .nav-links {
+        position: static;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        max-height: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-links a {
+        white-space: nowrap;
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="เมนูหลัก">
+    <div class="container nav-inner">
+      <a class="brand" href="#hero">
+        <span class="logo-mark">₿</span>
+        <span class="brand-text">รู้จัก Bitcoin &amp; Blockchain</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="เปิดเมนู">
+        <span></span>
+      </button>
+      <div class="nav-links" id="navMenu">
+        <a href="#hero">เปิดเรื่อง <span>01</span></a>
+        <a href="#history">ประวัติเงิน <span>02</span></a>
+        <a href="#problems">ปัญหาระบบเดิม <span>03</span></a>
+        <a href="#origin">กำเนิด Bitcoin <span>04</span></a>
+        <a href="#blockchain">Blockchain <span>05</span></a>
+        <a href="#difference">แยกความหมาย <span>06</span></a>
+        <a href="#crypto">กลไก Crypto <span>07</span></a>
+        <a href="#btc-special">Bitcoin ต่างยังไง <span>08</span></a>
+        <a href="#defi">DeFi <span>09</span></a>
+        <a href="#stablecoin">Stablecoin/CBDC <span>10</span></a>
+        <a href="#thai-use">ชีวิตคนไทย <span>11</span></a>
+        <a href="#web3">Web3 <span>12</span></a>
+        <a href="#scam">Scam <span>13</span></a>
+        <a href="#future">อนาคต <span>14</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="progress-track" aria-hidden="true">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="กลับขึ้นด้านบน">↑</button>
+
+  <main>
+    <section class="section hero" id="hero">
+      <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="container hero-inner">
+        <div class="hero-emblem reveal">₿</div>
+        <div class="eyebrow reveal">สารคดีอินเทอร์แอ็กทีฟสำหรับคนไทยที่ไม่เคยเรียนการเงินมาก่อน</div>
+        <h1 class="reveal">โลกการเงินกำลังเปลี่ยน</h1>
+        <h2 class="reveal">คุณจะเป็นคนที่รู้ หรือคนที่ถูกทิ้งไว้ข้างหลัง?</h2>
+
+        <div class="hero-stats stagger">
+          <article class="stat-card reveal" style="--i:0;">
+            <span class="stat-number counter immediate" data-target="7" data-decimals="0" data-suffix=" ล้านคน">0</span>
+            <p class="stat-label">ผู้ถือ Digital Asset ในไทย ปี 2568</p>
+          </article>
+          <article class="stat-card reveal" style="--i:1;">
+            <span class="stat-number counter immediate" data-target="87.4" data-decimals="1" data-suffix="%">0</span>
+            <p class="stat-label">หนี้ครัวเรือนไทยต่อ GDP จาก ธปท. ไตรมาส 1 ปี 2568</p>
+          </article>
+          <article class="stat-card reveal" style="--i:2;">
+            <span class="stat-number counter immediate" data-target="1.4" data-decimals="1" data-suffix=" พันล้านคน">0</span>
+            <p class="stat-label">ประชากรโลกที่ยังไม่มีบัญชีธนาคาร</p>
+          </article>
+        </div>
+
+        <p class="hero-intro reveal">เว็บนี้ไม่ได้สอนให้คุณลงทุน แต่สอนให้คุณเข้าใจระบบที่กำลังเปลี่ยนชีวิตทุกคน และเหตุผลที่คำว่าเงินกำลังมีความหมายใหม่</p>
+      </div>
+
+      <a class="scroll-indicator" href="#history" aria-label="เลื่อนลงไปยังส่วนถัดไป">
+        <span class="mouse"></span>
+        <span>เลื่อนลงเพื่อเริ่มเรื่อง</span>
+      </a>
+    </section>
+
+    <section class="section theme-history" id="history">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 02</span>
+          <span class="kicker">ก่อน Bitcoin มีอะไร?</span>
+          <h2 class="section-title">ประวัติศาสตร์เงิน คือประวัติศาสตร์ของการแก้ปัญหาการแลกเปลี่ยน</h2>
+          <p class="section-intro">เงินไม่เคยเริ่มต้นจากแอปบนมือถือ มันเริ่มจากคำถามพื้นฐานที่สุดของมนุษย์ว่า “ถ้าฉันมีของที่คุณไม่ต้องการตรงนี้เดี๋ยวนี้ เราจะแลกเปลี่ยนกันอย่างไร” เมื่อปัญหานั้นโตขึ้น สังคมจึงค่อย ๆ ประดิษฐ์รูปแบบของเงินขึ้นมา</p>
+        </header>
+
+        <div class="timeline">
+          <article class="timeline-item reveal" style="--i:0;">
+            <div class="timeline-card">
+              <div class="period">ยุคแลกเปลี่ยน</div>
+              <h3>Barter</h3>
+              <p>ถ้าชาวนามีข้าว แต่อยากได้เนื้อ เขาต้องหาคนขายเนื้อที่อยากได้ข้าวพร้อมกันพอดี นี่เรียกว่า double coincidence of wants และเป็นเหตุผลว่าทำไมระบบนี้ขยายไม่ได้</p>
+              <ul>
+                <li>ต้องการความบังเอิญสูงมาก</li>
+                <li>ราคาต่อรองวัดยาก</li>
+                <li>เก็บมูลค่าไว้ได้น้อย</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item reveal" style="--i:1;">
+            <div class="timeline-card">
+              <div class="period">โลหะมีค่า</div>
+              <h3>ทองและเงินชนะเพราะคุณสมบัติ</h3>
+              <p>ทองคำหายาก ทนทาน แบ่งได้ พกพาได้ และคนจำนวนมากเห็นพ้องว่ามีคุณค่า สิ่งเหล่านี้ทำให้ทองคำเป็นเงินระดับโลกมาหลายพันปีโดยไม่ต้องมีอินเทอร์เน็ต</p>
+              <ul>
+                <li>หายากจึงไม่ถูกสร้างเพิ่มง่าย</li>
+                <li>ไม่เน่าเสียและตรวจสอบได้</li>
+                <li>ใช้ได้ทั้งเป็นทรัพย์สินและสัญลักษณ์ของความเชื่อมั่น</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item reveal" style="--i:2;">
+            <div class="timeline-card">
+              <div class="period">เงินกระดาษ</div>
+              <h3>กระดาษที่เคยเป็นตัวแทนทองคำ</h3>
+              <p>เมื่อคนเริ่มฝากทองไว้กับสถาบัน ก็ได้ใบรับรองกลับมา กระดาษใบนี้พกง่าย โอนง่าย และสะดวกกว่าการแบกทองไปซื้อของทุกครั้ง</p>
+              <ul>
+                <li>คุณค่าในระยะแรกมาจากสัญญาว่าแลกทองได้</li>
+                <li>ความสะดวกเพิ่มขึ้น แต่ต้องเชื่อใจผู้ออกเอกสาร</li>
+                <li>เงินเริ่มพึ่งพาสถาบันมากขึ้น</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item reveal" style="--i:3;">
+            <div class="timeline-card">
+              <div class="period">Nixon Shock 1971</div>
+              <h3>ดอลลาร์เลิกผูกกับทองคำ</h3>
+              <p>เมื่อสหรัฐฯ ยกเลิก Gold Standard เงินกระดาษไม่ได้มีคำสัญญาว่าแลกทองได้อีกต่อไป มูลค่าของมันขึ้นกับความเชื่อมั่นในรัฐบาลและระบบเศรษฐกิจ</p>
+              <ul>
+                <li>โลกเข้าสู่ยุค Fiat Currency เต็มตัว</li>
+                <li>เงินมีค่าเพราะรัฐบอกว่ามีค่า</li>
+                <li>ความยืดหยุ่นเพิ่มขึ้น แต่การจำกัดปริมาณลดลง</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item reveal" style="--i:4;">
+            <div class="timeline-card">
+              <div class="period">ยุค Fiat</div>
+              <h3>เงินสมัยใหม่คือความเชื่อมั่นที่จัดการด้วยนโยบาย</h3>
+              <p>ทุกสกุลเงินหลักในโลกวันนี้เป็น Fiat ทั้งหมด รัฐสามารถออกเงินได้ตามเครื่องมือนโยบายที่เห็นว่าเหมาะสม ซึ่งมีทั้งประโยชน์และความเสี่ยง</p>
+              <ul>
+                <li>ช่วยรับมือวิกฤตและกระตุ้นเศรษฐกิจได้</li>
+                <li>แต่เปิดทางให้มูลค่าเงินขึ้นกับวินัยของระบบ</li>
+                <li>ประชาชนจึงต้องฝากอนาคตไว้กับผู้กำหนดนโยบาย</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item reveal" style="--i:5;">
+            <div class="timeline-card">
+              <div class="period">ตุลาคม 2551</div>
+              <h3>Bitcoin ปรากฏตัวหลังวิกฤตการเงินโลก</h3>
+              <p>หลังโลกเห็นธนาคารขนาดใหญ่พังและถูกอุ้มด้วยเงินสาธารณะ มีคนถามคำถามใหม่ว่า “ถ้าเราอยากมีระบบเงินที่ไม่ต้องเชื่อใจคนกลาง จะเป็นไปได้ไหม” คำตอบแรกในระดับใช้งานจริงคือ Bitcoin</p>
+              <ul>
+                <li>ไม่ใช่การย้อนกลับไปหาทองคำแบบเดิม</li>
+                <li>แต่เป็นการออกแบบเงินยุคดิจิทัลด้วยคณิตศาสตร์</li>
+                <li>และการตรวจสอบร่วมกันของเครือข่าย</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="history-bridge reveal">
+          <p class="bridge-text">เข้าใจรากเหง้าของเงินแล้ว ตอนนี้มาดูว่าระบบปัจจุบันมีปัญหาอะไร และทำไมผู้คนจำนวนมากจึงเริ่มมองหาทางเลือกอื่น</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-problems" id="problems">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 03</span>
+          <span class="kicker">ใครได้ประโยชน์ ใครจ่ายราคา?</span>
+          <h2 class="section-title">ปัญหาของระบบการเงินปัจจุบันไม่ได้กระทบทุกคนเท่ากัน</h2>
+          <p class="section-intro">ธนาคารกลางไม่ได้พิมพ์เงินเพราะอยากทำร้ายประชาชนเสมอไป หลายครั้งทำเพื่อกันเศรษฐกิจทรุดหรืออุดรอยรั่วด้านสภาพคล่อง แต่เมื่อระบบออกแบบให้เงินใหม่เข้าหาบางคนก่อนบางคนหลัง ผลลัพธ์ที่เกิดขึ้นจริงคือความเหลื่อมล้ำและกำลังซื้อที่ค่อย ๆ หายไป</p>
+        </header>
+
+        <div class="problem-stack">
+          <article class="problem-panel reveal">
+            <div class="substory-header">
+              <div class="substory-tag">Sub-story A</div>
+              <h3>การพิมพ์เงินและผลที่ตามมา</h3>
+              <p>เงินเฟ้อมีหลายสาเหตุ ทั้งพลังงาน สงคราม ซัพพลายเชน และความต้องการผู้บริโภค แต่ในระยะยาว ถ้าเงินในระบบโตเร็วกว่าสินค้าและบริการ ราคามักจะปรับขึ้นตามธรรมชาติ</p>
+            </div>
+
+            <div class="printer-scene">
+              <div class="printer"></div>
+              <div class="printer-slot"></div>
+              <div class="bill-rain" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="stat-grid stagger">
+              <article class="stat-card reveal" style="--i:0;">
+                <span class="stat-number counter" data-target="15" data-decimals="0" data-prefix="$" data-suffix=" ล้านล้าน">0</span>
+                <p class="stat-label">M2 Money Supply สหรัฐฯ ปี 2562</p>
+              </article>
+              <article class="stat-card reveal" style="--i:1;">
+                <span class="stat-number counter" data-target="22" data-decimals="0" data-prefix="$" data-suffix=" ล้านล้าน">0</span>
+                <p class="stat-label">M2 Money Supply สหรัฐฯ ปี 2565</p>
+              </article>
+              <article class="stat-card reveal" style="--i:2;">
+                <span class="stat-number counter" data-target="7" data-decimals="0" data-prefix="$" data-suffix=" ล้านล้าน">0</span>
+                <p class="stat-label">เงินเพิ่มขึ้นใน 2 ปี หรือ +47%</p>
+              </article>
+              <article class="stat-card reveal" style="--i:3;">
+                <span class="stat-number counter" data-target="27" data-decimals="0" data-suffix="%">0</span>
+                <p class="stat-label">อัตราการเพิ่ม M2 ช่วงปี 2563-2564 สูงสุดในประวัติศาสตร์สหรัฐฯ</p>
+              </article>
+              <article class="stat-card reveal" style="--i:4;">
+                <span class="stat-number">40 ปี</span>
+                <p class="stat-label">เงินเฟ้อสหรัฐฯ ปี 2565 สูงที่สุดในรอบสี่ทศวรรษ</p>
+              </article>
+            </div>
+
+            <div class="note-bar" style="margin-top:22px;">
+              <strong>สมดุลที่ต้องเข้าใจ:</strong>
+              <p>การขยายปริมาณเงินบางครั้งช่วยหยุดระบบการเงินไม่ให้ล้มทั้งแผง แต่ยิ่งระบบใช้เครื่องมือนี้บ่อยโดยไม่มีวินัย ผลข้างเคียงก็ยิ่งไปลงที่ค่าครองชีพของประชาชน</p>
+            </div>
+          </article>
+
+          <article class="problem-panel reveal">
+            <div class="substory-header">
+              <div class="substory-tag">Sub-story B</div>
+              <h3>กำลังซื้อที่หายไป แม้คุณจะฝากเงินไว้เฉย ๆ</h3>
+              <p>ถ้าเงินออมโตช้ากว่าเงินเฟ้อ คุณไม่ได้อยู่กับที่ คุณกำลังถอยหลังโดยไม่รู้ตัว</p>
+            </div>
+
+            <div class="purchase-bars">
+              <div class="purchase-bar">
+                <strong class="positive">ปี 2456: 1 ดอลลาร์มีพลังซื้อสูง</strong>
+                <div class="bar-shell"><div class="bar-fill" style="width:100%;"></div></div>
+                <p>ภาพเปรียบเทียบแบบง่าย: เคยซื้อช็อกโกแลตได้ประมาณ 30 แท่ง</p>
+              </div>
+              <div class="purchase-bar">
+                <strong class="negative">ปี 2563: 1 ดอลลาร์ซื้อได้น้อยมาก</strong>
+                <div class="bar-shell"><div class="bar-fill" style="width:10%;"></div></div>
+                <p>ข้อมูล CPI ของ BLS ชี้ว่าดอลลาร์สูญเสียกำลังซื้อมากกว่า 90% นับตั้งแต่ปี 2456</p>
+              </div>
+            </div>
+
+            <div class="grid-2" style="margin-top:24px;">
+              <article class="info-card reveal">
+                <span class="stat-number counter" data-target="0.39" data-decimals="2" data-suffix="%">0</span>
+                <p class="stat-label">ดอกเบี้ยออมทรัพย์เฉลี่ยสหรัฐฯ จาก FDIC</p>
+              </article>
+              <article class="info-card reveal">
+                <span class="stat-number counter" data-target="2.0" data-decimals="1" data-suffix="%">0</span>
+                <p class="stat-label">เป้าหมายเงินเฟ้อของ Fed</p>
+              </article>
+            </div>
+
+            <div class="note-bar" style="margin-top:22px; border-left-color: var(--red);">
+              <strong>ผลลัพธ์ที่ประชาชนรู้สึกได้:</strong>
+              <p>แม้คุณจะไม่เสี่ยงลงทุนเลย ถ้าเงินเฟ้อเฉลี่ย 2.0% แต่ดอกเบี้ยเงินฝากได้แค่ 0.39% กำลังซื้อหายไปราว -1.61% ต่อปีอยู่ดี</p>
+            </div>
+          </article>
+
+          <article class="problem-panel reveal">
+            <div class="substory-header">
+              <div class="substory-tag">Sub-story C</div>
+              <h3>Cantillon Effect: เงินใหม่ไม่เคยไปถึงทุกคนพร้อมกัน</h3>
+              <p>เมื่อมีเงินใหม่เข้าสู่ระบบ คนที่อยู่ใกล้แหล่งเงินก่อนจะได้ใช้เงินตอนราคายังไม่ขึ้น ส่วนคนปลายทางมักเจอราคาที่ปรับไปแล้ว</p>
+            </div>
+
+            <div class="cantillon-flow stagger revealed-ready">
+              <div class="flow-item" style="--i:0;"><span class="order">1</span><div><strong>ธนาคาร</strong><p>เข้าถึงสภาพคล่องก่อน ราคายังไม่ขยับเต็มที่</p></div><span class="advantage">ได้ก่อน</span></div>
+              <div class="flow-item" style="--i:1;"><span class="order">2</span><div><strong>บริษัทใหญ่</strong><p>กู้ได้ง่ายกว่าคนทั่วไป จึงดูดโอกาสทางการเงินก่อน</p></div><span class="advantage">ได้ก่อน</span></div>
+              <div class="flow-item" style="--i:2;"><span class="order">3</span><div><strong>นักลงทุนตลาดหุ้นและอสังหาฯ</strong><p>สินทรัพย์มักขึ้นก่อนค่าจ้างแรงงาน</p></div><span class="advantage">ได้ก่อน</span></div>
+              <div class="flow-item" style="--i:3;"><span class="order">4</span><div><strong>ธุรกิจขนาดกลาง</strong><p>ต้องต่อคิวทั้งเครดิตและต้นทุนวัตถุดิบ</p></div><span class="advantage">เริ่มตามไม่ทัน</span></div>
+              <div class="flow-item" style="--i:4;"><span class="order">5</span><div><strong>พนักงานออฟฟิศ</strong><p>รายได้ขึ้นช้ากว่าราคาสินค้าและค่าเช่า</p></div><span class="advantage">ถูกบีบ</span></div>
+              <div class="flow-item" style="--i:5;"><span class="order">6</span><div><strong>แรงงานรายวันและเกษตรกร</strong><p>ได้เงินสุดท้ายตอนราคาสูงขึ้นทั่วระบบแล้ว</p></div><span class="advantage">จ่ายราคา</span></div>
+            </div>
+
+            <div class="note-bar" style="margin-top:22px; border-left-color: var(--gold-dim);">
+              <strong>แก่นของปัญหา:</strong>
+              <p>ความเหลื่อมล้ำไม่ได้โตแค่จากความขยันหรือความสามารถเท่านั้น แต่มันถูกเร่งโดยลำดับการเข้าถึงเงินใหม่ด้วย</p>
+            </div>
+          </article>
+
+          <article class="problem-panel reveal">
+            <div class="substory-header">
+              <div class="substory-tag">Sub-story D</div>
+              <h3>Bailout: กำไรเป็นของสถาบัน ขาดทุนกลายเป็นภาระสาธารณะ</h3>
+              <p>เมื่อระบบการเงินเสี่ยงเกินไปแล้วพัง คนที่รับผลกระทบมักไม่ใช่แค่ผู้ตัดสินใจ แต่คือประชาชนทั้งระบบ</p>
+            </div>
+
+            <div class="justice-scale" aria-hidden="true">
+              <div class="scale-center"></div>
+              <div class="scale-arm"></div>
+              <div class="scale-pan left">ประชาชนจ่าย</div>
+              <div class="scale-pan right">สถาบันรอด</div>
+            </div>
+
+            <div class="grid-2">
+              <article class="detail-panel reveal">
+                <h3>วิกฤตสหรัฐฯ ปี 2551</h3>
+                <p>ธนาคารลงทุนในสินเชื่อที่อยู่อาศัยคุณภาพต่ำจนระบบแตกร้าว รัฐบาลเข้าช่วยด้วยโครงการ Bailout มูลค่า 700,000 ล้านดอลลาร์ ขณะที่ CEO ธนาคารบางแห่งยังได้รับโบนัสรวม 1,600 ล้านดอลลาร์ในปีถัดมา</p>
+              </article>
+              <article class="detail-panel reveal">
+                <h3>วิกฤตต้มยำกุ้ง ปี 2540</h3>
+                <p>ไทยกู้เงินต่างประเทศมากเกินไป เมื่อค่าเงินบาทพัง ประเทศต้องพึ่ง IMF และประชาชนรับภาระผ่านภาษี การตัดรายจ่าย และผลกระทบทางเศรษฐกิจระยะยาว</p>
+              </article>
+            </div>
+
+            <div class="quote-panel" style="margin-top:22px;">
+              <blockquote>Privatize Gains, Socialize Losses</blockquote>
+              <p class="quote-caption">กำไรเป็นของเอกชน แต่ขาดทุนถูกผลักไปให้สังคมรับร่วมกัน นี่คือรูปแบบที่เกิดซ้ำในหลายวิกฤตการเงิน</p>
+            </div>
+          </article>
+
+          <article class="problem-panel reveal">
+            <div class="substory-header">
+              <div class="substory-tag">Sub-story E</div>
+              <h3>ผลกระทบต่อคนไทย ปี 2568</h3>
+              <p>ถ้าอยากรู้ว่าระบบทำงานอย่างไร ให้ดูชีวิตประจำวันของครัวเรือนทั่วไป ไม่ใช่แค่กราฟในตลาดทุน</p>
+            </div>
+
+            <div class="stat-grid stagger">
+              <article class="stat-card reveal" style="--i:0;">
+                <span class="stat-number counter" data-target="87.4" data-decimals="1" data-suffix="%">0</span>
+                <p class="stat-label">หนี้ครัวเรือนไทยต่อ GDP</p>
+              </article>
+              <article class="stat-card reveal" style="--i:1;">
+                <span class="stat-number counter" data-target="606378" data-decimals="0" data-suffix=" บาท">0</span>
+                <p class="stat-label">หนี้เฉลี่ยต่อครัวเรือน ปี 2567</p>
+              </article>
+              <article class="stat-card reveal" style="--i:2;">
+                <span class="stat-number counter" data-target="18207" data-decimals="0" data-suffix=" บาท">0</span>
+                <p class="stat-label">ค่าใช้จ่ายครัวเรือนต่อเดือน</p>
+              </article>
+              <article class="stat-card reveal" style="--i:3;">
+                <span class="stat-number counter" data-target="0.8" data-decimals="1" data-suffix="%/ปี">0</span>
+                <p class="stat-label">รายได้จริงที่เพิ่มหลัง COVID</p>
+              </article>
+              <article class="stat-card reveal" style="--i:4;">
+                <span class="stat-number counter" data-target="18.5" data-decimals="1" data-prefix="-" data-suffix="%">0</span>
+                <p class="stat-label">รายได้จริงของแรงงานรายได้น้อย เทียบก่อน COVID</p>
+              </article>
+              <article class="stat-card reveal" style="--i:5;">
+                <span class="stat-number">337-400</span>
+                <p class="stat-label">ค่าแรงขั้นต่ำต่อวัน</p>
+              </article>
+              <article class="stat-card reveal" style="--i:6;">
+                <span class="stat-number counter" data-target="4.9" data-decimals="1" data-suffix="%">0</span>
+                <p class="stat-label">อัตราความยากจน ปี 2567</p>
+              </article>
+              <article class="stat-card reveal" style="--i:7;">
+                <span class="stat-number counter" data-target="3.43" data-decimals="2" data-suffix=" ล้านคน">0</span>
+                <p class="stat-label">จำนวนคนจนโดยประมาณ</p>
+              </article>
+            </div>
+
+            <div class="trap-loop">
+              <p class="muted">วงจรกับดักที่คนจำนวนมากเผชิญจริง</p>
+              <div class="trap-loop-grid">
+                <div class="trap-node" style="--i:0;"><strong>ราคาสูงขึ้น</strong><p>อาหาร ค่าเช่า ค่าเดินทางแพงขึ้นพร้อมกัน</p></div>
+                <div class="trap-node" style="--i:1;"><strong>รายได้ตามไม่ทัน</strong><p>ค่าจ้างขยับช้ากว่าค่าครองชีพ</p></div>
+                <div class="trap-node" style="--i:2;"><strong>กู้เงินเพิ่ม</strong><p>ใช้หนี้หมุนหนี้เพื่อประคองเดือนต่อเดือน</p></div>
+                <div class="trap-node" style="--i:3;"><strong>เงินเหลือน้อยลง</strong><p>ดอกเบี้ยกินส่วนที่ควรเป็นเงินออมและโอกาส</p></div>
+              </div>
+            </div>
+
+            <div class="history-bridge" style="margin-top:28px; background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.16);">
+              <p class="bridge-text">นี่ไม่ใช่ความผิดของคุณ มันคือผลลัพธ์ของระบบที่ถูกออกแบบมาแบบนี้</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="history-bridge reveal" style="margin-top:34px; background: rgba(247, 147, 26, 0.05); border-color: rgba(247, 147, 26, 0.16);">
+          <p class="bridge-text">เข้าใจปัญหาแล้ว ทีนี้มาดูว่า Bitcoin ถูกสร้างขึ้นมาเพื่อตอบคำถามอะไร</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-origin" id="origin">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 04</span>
+          <span class="kicker">จุดเริ่มต้นของทุกอย่าง</span>
+          <h2 class="section-title">Bitcoin เกิดจากการไม่อยากให้โลกต้องเชื่อใจระบบแบบเดิมเพียงอย่างเดียว</h2>
+          <p class="section-intro">เรื่องนี้ไม่ใช่เรื่องของราคา แต่เป็นเรื่องของแรงผลักดันทางความคิด หลังวิกฤต 2551 มีคนหนึ่งเสนอว่าเงินดิจิทัลสามารถทำงานแบบ peer-to-peer ได้โดยไม่ต้องอาศัยสถาบันกลางมารับรองทุกธุรกรรม</p>
+        </header>
+
+        <div class="origin-story reveal">
+          <p class="focus-quote">3 ตุลาคม 2551 — Lehman Brothers ล้มละลาย วิกฤตการเงินโลกเริ่มต้น ธนาคารถูก Bailout ด้วยเงินภาษีประชาชน และบุคคลลึกลับคนหนึ่งเห็นทุกอย่าง</p>
+        </div>
+
+        <div class="quote-panel reveal">
+          <blockquote class="typewriter" data-text="Chancellor on brink of second bailout for banks"></blockquote>
+          <p class="quote-caption">Satoshi Nakamoto ซ่อนพาดหัวข่าว The Times ฉบับ 3 ม.ค. 2552 ไว้ใน Genesis Block ตลอดกาล คำนี้ไม่ใช่คำโปรโมต แต่มันคือการประกาศว่า Bitcoin เกิดมาในโลกที่คนเริ่มหมดศรัทธาต่อการอุ้มธนาคารแบบไร้ขอบเขต</p>
+        </div>
+
+        <div class="origin-timeline">
+          <article class="origin-event reveal" style="--i:0;">
+            <div class="timeline-card">
+              <div class="period">ตุลาคม 2551</div>
+              <h3>Bitcoin Whitepaper เผยแพร่</h3>
+              <p>ชื่อเต็มคือ A Peer-to-Peer Electronic Cash System เสนอระบบเงินอิเล็กทรอนิกส์ที่ไม่ต้องมีคนกลางคอยอนุมัติ</p>
+            </div>
+          </article>
+          <article class="origin-event reveal" style="--i:1;">
+            <div class="timeline-card">
+              <div class="period">3 มกราคม 2552</div>
+              <h3>Genesis Block ถูกขุด</h3>
+              <p>บล็อกแรกของ Bitcoin ถือกำเนิดขึ้น พร้อมข้อความพาดหัวข่าวที่กลายเป็น DNA ทางอุดมการณ์ของเครือข่าย</p>
+            </div>
+          </article>
+          <article class="origin-event reveal" style="--i:2;">
+            <div class="timeline-card">
+              <div class="period">22 พฤษภาคม 2553</div>
+              <h3>Bitcoin Pizza Day</h3>
+              <p>10,000 BTC ถูกใช้ซื้อพิซซ่า 2 ถาด เป็นครั้งแรกที่ Bitcoin ถูกใช้ซื้อของจริงในประวัติศาสตร์</p>
+            </div>
+          </article>
+          <article class="origin-event reveal" style="--i:3;">
+            <div class="timeline-card">
+              <div class="period">2558</div>
+              <h3>Ethereum เปิดตัว Smart Contract</h3>
+              <p>จากเงินดิจิทัลสู่แพลตฟอร์มที่รันเงื่อนไขอัตโนมัติ โลก Blockchain จึงเริ่มขยายไปไกลกว่าการโอนเงิน</p>
+            </div>
+          </article>
+          <article class="origin-event reveal" style="--i:4;">
+            <div class="timeline-card">
+              <div class="period">2564</div>
+              <h3>Bitcoin เข้าสู่กระแสหลัก</h3>
+              <p>El Salvador รับ Bitcoin เป็นเงินตราที่ถูกกฎหมาย แสดงให้เห็นว่ามันไม่ใช่แค่สิ่งทดลองของคนกลุ่มเล็กอีกต่อไป</p>
+            </div>
+          </article>
+          <article class="origin-event reveal" style="--i:5;">
+            <div class="timeline-card">
+              <div class="period">มกราคม 2567</div>
+              <h3>Bitcoin Spot ETF ในสหรัฐฯ ได้รับอนุมัติ</h3>
+              <p>สถาบันการเงินกระแสหลักเริ่มสร้างสะพานให้เงินทุนแบบเดิมเข้าถึง Bitcoin ภายใต้กรอบกำกับดูแล</p>
+            </div>
+          </article>
+          <article class="origin-event reveal" style="--i:6;">
+            <div class="timeline-card">
+              <div class="period">มีนาคม 2568</div>
+              <h3>US Strategic Bitcoin Reserve</h3>
+              <p>การถือครอง Bitcoin ในเชิงยุทธศาสตร์กลายเป็นประเด็นนโยบายระดับรัฐในสหรัฐฯ</p>
+            </div>
+          </article>
+          <article class="origin-event reveal" style="--i:7;">
+            <div class="timeline-card">
+              <div class="period">18 กรกฎาคม 2568</div>
+              <h3>GENIUS Act ถูกลงนาม</h3>
+              <p>กฎหมาย Crypto ฉบับสำคัญฉบับแรกในสหรัฐฯ ตอกย้ำว่าระบบกำกับดูแลกำลังไล่ตามเทคโนโลยีอย่างจริงจัง</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="origin-response-grid stagger">
+          <article class="response-card reveal" style="--i:0;">
+            <div class="arrow">พิมพ์เงินไม่จำกัด →</div>
+            <p><strong>Bitcoin จำกัด Supply ที่ 21 ล้าน BTC</strong> โดยกติกาถูกฝังไว้ในโปรโตคอล ไม่ใช่ขึ้นกับนโยบายรายปี</p>
+          </article>
+          <article class="response-card reveal" style="--i:1;">
+            <div class="arrow">ความลับของธนาคาร →</div>
+            <p><strong>Bitcoin โปร่งใสต่อสาธารณะ</strong> ทุกคนดูธุรกรรมบนเครือข่ายได้ตลอดเวลา</p>
+          </article>
+          <article class="response-card reveal" style="--i:2;">
+            <div class="arrow">Bailout ด้วยภาษี →</div>
+            <p><strong>Bitcoin ไม่มีผู้จัดการกลางคอยอุ้ม</strong> ใครเสี่ยง ใครดูแลคีย์ และใครทำผิดกติกาก็รับผลเอง</p>
+          </article>
+          <article class="response-card reveal" style="--i:3;">
+            <div class="arrow">ต้องพึ่งสถาบัน →</div>
+            <p><strong>Bitcoin ใช้คณิตศาสตร์แทนความเชื่อใจ</strong> และให้เครือข่ายร่วมกันตรวจสอบแทนการเชื่อคนเดียว</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-blockchain" id="blockchain">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 05</span>
+          <span class="kicker">หัวใจของทุกอย่าง</span>
+          <h2 class="section-title">Blockchain คือสมุดบัญชีสาธารณะที่ไม่มีเจ้าของคนเดียว</h2>
+          <p class="section-intro">ถ้า Bitcoin คือกรณีใช้งานแรก Blockchain คือโครงสร้างที่ทำให้กรณีใช้งานนั้นเป็นไปได้ มันคือวิธีเก็บข้อมูลให้คนจำนวนมากเห็นตรงกัน โดยแก้ย้อนหลังแบบเงียบ ๆ ไม่ได้</p>
+        </header>
+
+        <div class="ledger-compare">
+          <article class="ledger-card central reveal">
+            <h3>สมุดบัญชีธนาคารแบบเดิม</h3>
+            <div class="mini-ledger central"></div>
+            <p>อยู่ในระบบของธนาคาร แก้ไขได้โดยผู้ดูแลระบบ เปิดเผยต่อสาธารณะน้อย และผู้ใช้ต้องเชื่อว่าบัญชีถูกบันทึกถูกต้อง</p>
+          </article>
+          <article class="ledger-card distributed reveal">
+            <h3>Blockchain</h3>
+            <div class="mini-ledger distributed">
+              <svg class="node-lines" viewBox="0 0 300 160" aria-hidden="true">
+                <line x1="45" y1="42" x2="108" y2="86" stroke="rgba(59,130,246,0.32)" stroke-width="2"></line>
+                <line x1="108" y1="86" x2="150" y2="36" stroke="rgba(59,130,246,0.32)" stroke-width="2"></line>
+                <line x1="108" y1="86" x2="204" y2="96" stroke="rgba(59,130,246,0.32)" stroke-width="2"></line>
+                <line x1="150" y1="36" x2="246" y2="52" stroke="rgba(59,130,246,0.32)" stroke-width="2"></line>
+                <line x1="108" y1="86" x2="138" y2="126" stroke="rgba(59,130,246,0.32)" stroke-width="2"></line>
+                <line x1="246" y1="52" x2="204" y2="96" stroke="rgba(59,130,246,0.32)" stroke-width="2"></line>
+              </svg>
+              <div class="node-cloud">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <p>ข้อมูลเดียวกันถูกเก็บไว้ในคอมพิวเตอร์หลายพันเครื่องทั่วโลก ตรวจสอบร่วมกัน แก้ย้อนหลังไม่ได้หากเครือข่ายส่วนใหญ่ไม่ยอมรับ</p>
+          </article>
+        </div>
+
+        <section class="blockchain-demo reveal">
+          <div class="grid-2">
+            <div class="demo-controls">
+              <div>
+                <h3>ลองแก้ข้อมูลใน Block #1</h3>
+                <p>กดปุ่มแล้วดูว่าทำไมบล็อกถัดไปจึงกลายเป็นสีแดงทันที ความเข้าใจเรื่อง “แก้ไม่ได้” จะชัดขึ้นมากเมื่อเห็นผลด้วยตา</p>
+              </div>
+              <label for="tamperInput">ข้อมูลใน Block #1</label>
+              <textarea id="tamperInput">A ส่ง 1 BTC ให้ B</textarea>
+              <div class="demo-actions">
+                <button class="button" id="tamperButton">ลองแก้ข้อมูล</button>
+                <button class="button secondary" id="resetButton">รีเซ็ตกลับค่าเดิม</button>
+              </div>
+              <div class="demo-status" id="demoStatus">สถานะปกติ: Block ทั้งสามเชื่อมกันสมบูรณ์ และ Hash ของแต่ละบล็อกตรงกับ Previous Hash ของบล็อกถัดไป</div>
+            </div>
+
+            <div class="blocks" id="blocksContainer">
+              <article class="block-card" data-block="1">
+                <div class="block-top">
+                  <span class="block-id">Block #1</span>
+                  <span class="badge">Genesis Data</span>
+                </div>
+                <div class="block-body">
+                  <div class="block-field"><span>Data</span><strong id="blockData1"></strong></div>
+                  <div class="block-field"><span>Hash</span><code id="blockHash1"></code></div>
+                  <div class="block-field"><span>Previous Hash</span><code id="blockPrev1">000000000000</code></div>
+                </div>
+              </article>
+              <article class="block-card" data-block="2">
+                <div class="block-top">
+                  <span class="block-id">Block #2</span>
+                  <span class="badge">Validated</span>
+                </div>
+                <div class="block-body">
+                  <div class="block-field"><span>Data</span><strong id="blockData2">B ส่ง 0.25 BTC ให้ C</strong></div>
+                  <div class="block-field"><span>Hash</span><code id="blockHash2"></code></div>
+                  <div class="block-field"><span>Previous Hash</span><code id="blockPrev2"></code></div>
+                </div>
+              </article>
+              <article class="block-card" data-block="3">
+                <div class="block-top">
+                  <span class="block-id">Block #3</span>
+                  <span class="badge">Validated</span>
+                </div>
+                <div class="block-body">
+                  <div class="block-field"><span>Data</span><strong id="blockData3">C ส่ง 0.1 BTC ให้ D</strong></div>
+                  <div class="block-field"><span>Hash</span><code id="blockHash3"></code></div>
+                  <div class="block-field"><span>Previous Hash</span><code id="blockPrev3"></code></div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="hash-explainer grid-2">
+            <div class="fingerprint reveal">
+              <div class="swirl"></div>
+            </div>
+            <div class="info-card reveal">
+              <h3>Hash คือ “ลายนิ้วมือดิจิทัล”</h3>
+              <p>เปลี่ยนข้อมูลแม้แค่ตัวอักษรเดียว Hash จะเปลี่ยนหมดทันที เมื่อทุกบล็อกอ้างอิง Hash ของบล็อกก่อนหน้า การปลอมข้อมูลหนึ่งจุดจึงลามไปทั้งสาย</p>
+              <p>นี่คือเหตุผลที่การโกงย้อนหลังแบบเงียบ ๆ ใน Blockchain แทบเป็นไปไม่ได้ ถ้าเครือข่ายยังทำงานตามกติกาเดิม</p>
+            </div>
+          </div>
+
+          <div class="pow-pos grid-2">
+            <article class="comparison-card reveal">
+              <span class="badge">Proof of Work</span>
+              <h3>Bitcoin</h3>
+              <p>Miner แข่งแก้โจทย์คณิตศาสตร์ ผู้ชนะได้สิทธิ์บันทึก Block และรับรางวัล BTC ใช้พลังงานสูง แต่ให้ความมั่นคงสูงมาก เพราะการโกงต้องใช้ต้นทุนจริง</p>
+              <p class="muted">เปรียบเหมือนล็อตเตอรีที่ต้องทำงานหนักก่อนถึงมีสิทธิ์ลุ้น</p>
+            </article>
+            <article class="comparison-card reveal">
+              <span class="badge" style="background: rgba(139, 92, 246, 0.12); color: #d6c7ff;">Proof of Stake</span>
+              <h3>Ethereum</h3>
+              <p>ผู้ถือ ETH วางเหรียญเป็นหลักประกัน แล้วระบบสุ่มเลือกผู้ตรวจสอบให้บันทึก Block ใช้พลังงานน้อยกว่าเดิมราว 99.95%</p>
+              <p class="muted">เปรียบเหมือนยิ่งถือหุ้นบริษัทมาก ยิ่งมีสิทธิ์ร่วมโหวตสูงขึ้น</p>
+            </article>
+          </div>
+
+          <div class="pros-cons grid-2 stagger">
+            <article class="card reveal" style="--i:0;">
+              <span class="badge">ข้อดี</span>
+              <h3>จุดแข็งของ Blockchain</h3>
+              <ul class="list-clean">
+                <li>โปร่งใส 100% ตรวจสอบได้ทุกคน</li>
+                <li>แก้ย้อนหลังไม่ได้ หลักฐานจึงคงอยู่ถาวร</li>
+                <li>ไม่มีจุดควบคุมเดียวที่ล้มแล้วพาทั้งระบบพัง</li>
+                <li>ทำงาน 24/7 ไม่มีวันหยุด</li>
+              </ul>
+            </article>
+            <article class="card reveal" style="--i:1;">
+              <span class="badge" style="background: rgba(239, 68, 68, 0.12); color: #ffbaba;">ข้อจำกัด</span>
+              <h3>สิ่งที่ต้องรู้ก่อนมองโลกสวยเกินไป</h3>
+              <ul class="list-clean">
+                <li>Bitcoin เร็วราว 7 TPS ขณะที่ Visa ระบุระดับสูงสุดประมาณ 24,000 TPS</li>
+                <li>ระบบ PoW ใช้พลังงานสูง</li>
+                <li>ส่งผิดแล้วเรียกคืนไม่ได้ง่ายแบบธนาคาร</li>
+                <li>ความโปร่งใสไม่เท่ากับใช้งานง่ายสำหรับทุกคน</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section theme-separation" id="difference">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 06</span>
+          <span class="kicker">สองสิ่งที่ทุกคนเข้าใจผิด</span>
+          <h2 class="section-title">Blockchain ไม่เท่ากับ Cryptocurrency และความต่างนี้สำคัญมาก</h2>
+          <p class="section-intro">หลายคนได้ยินคำว่า Blockchain แล้วนึกถึงราคาเหรียญทันที แต่นั่นคือการเอาถนนไปปนกับรถ เทคโนโลยีฐานข้อมูลกับสินทรัพย์ดิจิทัลเกี่ยวข้องกัน แต่ไม่ใช่สิ่งเดียวกัน</p>
+        </header>
+
+        <div class="road-scene reveal">
+          <div class="road-labels">
+            <span class="badge">Blockchain = ถนน</span>
+            <span class="badge">Cryptocurrency = รถ</span>
+            <span class="badge">Smart Contract = ป้ายจราจร</span>
+            <span class="badge">DeFi = เมือง</span>
+          </div>
+          <div class="road-sign">Smart Contract</div>
+          <div class="road-city"></div>
+          <div class="road-lane"></div>
+          <div class="road-car"></div>
+        </div>
+
+        <div class="table-shell reveal">
+          <table class="comparison-table" aria-label="ตารางเปรียบเทียบ Blockchain และ Cryptocurrency">
+            <thead>
+              <tr>
+                <th>มิติ</th>
+                <th>Blockchain</th>
+                <th>Cryptocurrency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="--i:0;"><td>ความหมาย</td><td>เทคโนโลยีฐานข้อมูล</td><td>สินทรัพย์ดิจิทัล</td></tr>
+              <tr style="--i:1;"><td>ใช้ทำอะไร</td><td>เก็บข้อมูลทุกประเภท</td><td>ใช้เป็นเงินหรือใช้โอนมูลค่า</td></tr>
+              <tr style="--i:2;"><td>ต้องการกันไหม</td><td>ไม่จำเป็นต้องมี Crypto</td><td>ต้องมี Blockchain รองรับ</td></tr>
+              <tr style="--i:3;"><td>ตัวอย่าง</td><td>โฉนดที่ดิน ใบปริญญา ประวัติสุขภาพ</td><td>Bitcoin Ethereum USDC</td></tr>
+              <tr style="--i:4;"><td>ใครใช้</td><td>รัฐ โรงพยาบาล องค์กร</td><td>นักลงทุน ผู้ส่งเงิน ผู้ใช้บริการชำระเงิน</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="quote-panel reveal" style="margin-top:28px; border-color: rgba(0, 212, 170, 0.24); background: linear-gradient(180deg, rgba(0, 212, 170, 0.06), rgba(10, 22, 40, 0.9));">
+          <blockquote class="typewriter" data-text="Blockchain ไม่มี Crypto ได้
+แต่ Crypto ไม่มี Blockchain ไม่ได้เลย"></blockquote>
+        </div>
+
+        <div class="card-grid stagger">
+          <article class="card reveal" style="--i:0;">
+            <span class="badge">ตัวอย่าง 1</span>
+            <h3>ระบบโฉนดที่ดิน</h3>
+            <p>ใช้บันทึกการโอนกรรมสิทธิ์ให้ตรวจสอบย้อนหลังได้ และลดความเสี่ยงของเอกสารปลอมโดยไม่ต้องมีเหรียญเพื่อเก็งกำไรเข้ามาเกี่ยว</p>
+          </article>
+          <article class="card reveal" style="--i:1;">
+            <span class="badge">ตัวอย่าง 2</span>
+            <h3>ใบปริญญาดิจิทัล</h3>
+            <p>มหาวิทยาลัยออกใบรับรองที่ตรวจสอบได้ทันที นายจ้างไม่ต้องโทรเช็กกับแต่ละสถาบันทุกครั้ง</p>
+          </article>
+          <article class="card reveal" style="--i:2;">
+            <span class="badge">ตัวอย่าง 3</span>
+            <h3>ประวัติสุขภาพ</h3>
+            <p>ข้อมูลติดตามผู้ป่วยข้ามโรงพยาบาลได้ ลดการซ้ำซ้อนและลดจุดเสี่ยงจากการแก้ไขข้อมูลที่ไม่มีร่องรอย</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-mechanics" id="crypto">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 07</span>
+          <span class="kicker">เงินดิจิทัลทำงานอย่างไร?</span>
+          <h2 class="section-title">เมื่อคุณส่ง Crypto จริง ๆ เบื้องหลังเกิดขั้นตอนอะไรบ้าง</h2>
+          <p class="section-intro">ส่วนนี้ไม่พูดเรื่องราคา แต่พูดเรื่องกลไก เพื่อให้เห็นว่าคำว่า wallet, private key และ transaction ไม่ใช่ศัพท์ลอย ๆ มันคือระบบการส่งมูลค่าบนเครือข่ายที่ไม่มีพนักงานคอยกดอนุมัติทีละรายการ</p>
+        </header>
+
+        <div class="transaction-flow reveal">
+          <div class="flow-steps stagger">
+            <article class="step-card reveal" style="--i:0;">
+              <span class="step-index">1</span>
+              <h3>สร้าง Wallet</h3>
+              <p>ระบบสร้าง Public Key และ Private Key ให้คุณ</p>
+            </article>
+            <article class="step-card reveal" style="--i:1;">
+              <span class="step-index">2</span>
+              <h3>เซ็นธุรกรรม</h3>
+              <p>คุณส่งคำสั่งพร้อม Digital Signature เพื่อยืนยันว่าเจ้าของคีย์คือคุณ</p>
+            </article>
+            <article class="step-card reveal" style="--i:2;">
+              <span class="step-index">3</span>
+              <h3>เข้า Mempool</h3>
+              <p>ธุรกรรมรอการตรวจสอบจากเครือข่ายก่อนบันทึกจริง</p>
+            </article>
+            <article class="step-card reveal" style="--i:3;">
+              <span class="step-index">4</span>
+              <h3>ผู้ตรวจสอบเช็ก</h3>
+              <p>Miner หรือ Validator ดูว่าลายเซ็นถูกต้องและยอดพอหรือไม่</p>
+            </article>
+            <article class="step-card reveal" style="--i:4;">
+              <span class="step-index">5</span>
+              <h3>บันทึกลง Block</h3>
+              <p>ธุรกรรมที่ผ่านเงื่อนไขจะถูกใส่ในบล็อกใหม่</p>
+            </article>
+            <article class="step-card reveal" style="--i:5;">
+              <span class="step-index">6</span>
+              <h3>ยืนยันถาวร</h3>
+              <p>เมื่อบล็อกถูกต่อทับหลายชั้น ความมั่นใจในธุรกรรมจะสูงขึ้นเรื่อย ๆ</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="mailbox-visual reveal">
+            <div class="mailbox">
+              <div class="mailbox-slot"></div>
+            </div>
+            <div class="mailbox-key"></div>
+          </div>
+          <article class="info-card reveal">
+            <h3>Public Key กับ Private Key แบบเข้าใจง่าย</h3>
+            <p><strong>Public Key</strong> เหมือนตู้รับจดหมาย ใครก็รู้ที่อยู่และส่งจดหมายมาให้คุณได้</p>
+            <p><strong>Private Key</strong> เหมือนกุญแจที่มีแค่คุณคนเดียว เอาไว้เปิดตู้และเซ็นยืนยันว่าคุณคือเจ้าของเงินจริง ๆ</p>
+            <p>ดังนั้น Crypto ไม่ได้ปลอดภัยเพราะไม่มีใครแตะต้องได้ แต่ปลอดภัยเพราะสิทธิ์ควบคุมผูกกับคีย์ที่พิสูจน์ได้ทางคณิตศาสตร์</p>
+          </article>
+        </div>
+
+        <div class="rules-grid grid-3 stagger">
+          <article class="warning-card red reveal" style="--i:0;">
+            <div class="icon">!</div>
+            <h3>Private Key หาย = เงินหายถาวร</h3>
+            <p>ไม่มีปุ่ม Reset Password แบบแอปธนาคาร ถ้าไม่มีคีย์ก็ไม่มีทางพิสูจน์สิทธิ์ได้</p>
+          </article>
+          <article class="warning-card yellow reveal" style="--i:1;">
+            <div class="icon">12</div>
+            <h3>Seed Phrase คือแบ็กอัป</h3>
+            <p>12-24 คำนี้คือสำเนาของสิทธิ์ควบคุมทั้งหมด ต้องเก็บออฟไลน์ ห้ามถ่ายรูป ห้ามส่งแชต ห้ามเก็บในอีเมล</p>
+          </article>
+          <article class="warning-card green reveal" style="--i:2;">
+            <div class="icon">C</div>
+            <h3>Hot Wallet กับ Cold Wallet</h3>
+            <p>Hot Wallet สะดวกกว่าแต่เชื่อมอินเทอร์เน็ต ส่วน Cold Wallet แยกออกจากออนไลน์ จึงปลอดภัยกว่าสำหรับการเก็บระยะยาว</p>
+          </article>
+        </div>
+
+        <div class="hex-grid stagger">
+          <article class="hex-item reveal" style="--i:0;">
+            <div class="hex-icon">₿</div>
+            <h3>Bitcoin</h3>
+            <p>Digital Gold สำหรับเก็บมูลค่าและโอนโดยไม่ต้องขออนุญาต</p>
+          </article>
+          <article class="hex-item reveal" style="--i:1;">
+            <div class="hex-icon">Ξ</div>
+            <h3>Ethereum</h3>
+            <p>World Computer ที่รันแอปและ Smart Contract</p>
+          </article>
+          <article class="hex-item reveal" style="--i:2;">
+            <div class="hex-icon">$</div>
+            <h3>Stablecoin</h3>
+            <p>โทเคนที่พยายามตรึงราคาให้เสถียรสำหรับชำระเงิน</p>
+          </article>
+          <article class="hex-item reveal" style="--i:3;">
+            <div class="hex-icon">◎</div>
+            <h3>Altcoin</h3>
+            <p>เหรียญทางเลือกที่มีวัตถุประสงค์เฉพาะและระดับความเสี่ยงต่างกันมาก</p>
+          </article>
+          <article class="hex-item reveal" style="--i:4;">
+            <div class="hex-icon">🐕</div>
+            <h3>Meme Coin</h3>
+            <p>ขับเคลื่อนด้วยวัฒนธรรมอินเทอร์เน็ตและแรงเก็งกำไร ความเสี่ยงสูงมาก</p>
+          </article>
+          <article class="hex-item reveal" style="--i:5;">
+            <div class="hex-icon">▣</div>
+            <h3>NFT</h3>
+            <p>ใบรับรองความเป็นเจ้าของดิจิทัล ไม่ได้จำกัดอยู่แค่รูปภาพ</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-btc" id="btc-special">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 08</span>
+          <span class="kicker">ไม่ใช่ Crypto ทุกชนิดเหมือนกัน</span>
+          <h2 class="section-title">Bitcoin พิเศษกว่า Altcoin อย่างไร โดยไม่ต้องเหมารวมว่าทุกอย่างดีหรือแย่เหมือนกัน</h2>
+          <p class="section-intro">คนส่วนใหญ่เอา Bitcoin ไปปนกับทุกอย่างในโลก Crypto แล้วสรุปทีเดียวว่ามันเหมือนกันทั้งหมด แต่ความจริงมันต่างกันมาก ทั้งเรื่องโครงสร้างการควบคุม ความมั่นคงของเครือข่าย และความยากในการเปลี่ยนกติกา</p>
+        </header>
+
+        <div class="gold-panel reveal">
+          <div class="table-shell reveal">
+            <table class="comparison-table" aria-label="ตารางเปรียบเทียบ Bitcoin กับ Altcoin ทั่วไป">
+              <thead>
+                <tr>
+                  <th>มิติ</th>
+                  <th>Bitcoin</th>
+                  <th>Altcoin ทั่วไป</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="--i:0;"><td>เจ้าของ</td><td>ไม่มีใครเป็นเจ้าของ</td><td>มักมีทีมพัฒนาแกนกลาง</td></tr>
+                <tr style="--i:1;"><td>บริษัท</td><td>ไม่มี</td><td>หลายตัวมีบริษัทหรือมูลนิธิเบื้องหลัง</td></tr>
+                <tr style="--i:2;"><td>Supply</td><td>จำกัด 21 ล้าน แน่นอน</td><td>บางโครงการเปลี่ยนได้ตามการกำกับดูแล</td></tr>
+                <tr style="--i:3;"><td>อายุระบบ</td><td>มากกว่า 16 ปีและยังทำงานต่อเนื่อง</td><td>หลายโครงการหายไปแล้วหรือหยุดพัฒนา</td></tr>
+                <tr style="--i:4;"><td>Security</td><td>Hash Rate สูงสุดในโลก</td><td>โดยรวมต่ำกว่าอย่างมีนัยสำคัญ</td></tr>
+                <tr style="--i:5;"><td>Governance</td><td>เปลี่ยนยาก จึงเสถียร</td><td>เปลี่ยนได้เร็วกว่า จึงยืดหยุ่นกว่าแต่เสี่ยงเรื่องผู้ควบคุม</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="gold-comparison stagger">
+            <article class="mini-card reveal" style="--i:0;">
+              <h3>ความหายาก</h3>
+              <p>ทองคำหายากจากธรรมชาติ ส่วน Bitcoin หายากจากกติกาโปรโตคอล ทั้งคู่ชนะใจคนเพราะไม่ถูกสร้างเพิ่มได้ง่ายแบบไร้ขอบเขต</p>
+            </article>
+            <article class="mini-card reveal" style="--i:1;">
+              <h3>การพกพา</h3>
+              <p>ทองคำพกยาก ขนย้ายแพง และตรวจสอบใช้เวลา แต่ Bitcoin โอนข้ามโลกได้ด้วยอินเทอร์เน็ตและตรวจสอบได้ทันที</p>
+            </article>
+            <article class="mini-card reveal" style="--i:2;">
+              <h3>การตรวจสอบ</h3>
+              <p>ทองแท้ต้องมีผู้เชี่ยวชาญและอุปกรณ์ช่วย ส่วน Bitcoin ตรวจสอบความถูกต้องด้วยซอฟต์แวร์ได้ตลอดเวลา</p>
+            </article>
+          </div>
+
+          <div class="btc-vs">
+            <article class="info-card reveal">
+              <h3>Bitcoin กับ Ethereum ไม่ใช่คู่แข่งตรงตัว</h3>
+              <p><strong>Bitcoin</strong> เด่นเรื่องความเป็นเงินดิจิทัลที่มุ่งเก็บมูลค่าและต้านการเปลี่ยนแปลงกติกาง่าย ๆ</p>
+              <p><strong>Ethereum</strong> เด่นเรื่องแพลตฟอร์มสำหรับรัน Smart Contract และระบบการเงินแบบโปรแกรมได้</p>
+            </article>
+            <article class="warning-card red reveal">
+              <h3>Meme Coin ไม่ใช่ Bitcoin</h3>
+              <p>DOGE หรือ SHIB ต่างจาก Bitcoin อย่างสิ้นเชิง ราคามักขับเคลื่อนด้วยกระแสโซเชียลมีเดียและความสนใจระยะสั้น อย่าเหมารวมว่าทั้งหมดคือสิ่งเดียวกัน</p>
+              <p class="muted">Altcoin ไม่ใช่ scam ทั้งหมด แต่หลายโครงการมีความเสี่ยงด้านโครงสร้างสูงกว่ามาก</p>
+            </article>
+          </div>
+
+          <div class="note-bar" style="margin-top:24px;">
+            <strong>สมดุลที่ควรรู้:</strong>
+            <p>Bitcoin มีความผันผวนด้านราคาสูงมาก การเข้าใจคุณสมบัติของมันไม่เท่ากับการบอกว่ามันเหมาะกับทุกคนหรือเป็นทางออกเดียวของโลก</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-defi" id="defi">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 09</span>
+          <span class="kicker">ธนาคารไร้ธนาคาร</span>
+          <h2 class="section-title">DeFi คือการเอาบริการการเงินมารันบนกฎของโค้ดแทนพนักงานและเอกสาร</h2>
+          <p class="section-intro">ถ้า Blockchain คือถนน และ Crypto คือรถ DeFi ก็คือเมืองที่มีร้านค้า ตลาด แลกเปลี่ยน กู้ยืม และประกันภัย แต่ทั้งหมดทำงานด้วย Smart Contract ที่บังคับตามเงื่อนไขโดยอัตโนมัติ</p>
+        </header>
+
+        <div class="vending-machine reveal">
+          <div class="vending-body">
+            <div class="vending-window"><span></span><span></span><span></span></div>
+            <div class="coin-slot"></div>
+            <div class="coin-drop">20</div>
+            <div class="output-slot"></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="info-card reveal">
+            <h3>Smart Contract แบบเข้าใจง่าย</h3>
+            <p>ตู้กดน้ำทำงานตามกฎเดียวทุกครั้ง ใส่เหรียญ 20 บาทแล้วได้น้ำ 1 ขวดทันที ไม่มีพนักงานมาชั่งใจว่าจะอนุมัติหรือไม่</p>
+            <p>Smart Contract ก็เช่นกัน มันบังคับเงื่อนไขตามโค้ดอย่างตรงไปตรงมา ต่างจากสัญญาแบบเดิมที่ยังต้องมีคนตีความ บิดพลิ้ว หรือไปศาล</p>
+          </article>
+          <article class="info-card reveal">
+            <h3>ต่างจากสัญญาธนาคารอย่างไร</h3>
+            <p>สัญญาแบบเดิมต้องพึ่งคนหลายชั้น ทั้งธนาคาร ทนาย ศาล และระบบราชการ แต่ Smart Contract บังคับใช้ตัวเองอัตโนมัติในขอบเขตที่โค้ดเขียนไว้</p>
+            <p class="muted">ข้อแลกเปลี่ยนคือ ถ้าโค้ดเขียนผิด ความผิดพลาดก็ทำงานอัตโนมัติเช่นกัน</p>
+          </article>
+        </div>
+
+        <div class="pyramid reveal" id="defiPyramid">
+          <button class="pyramid-layer" type="button" style="--i:4;">
+            <h3>Layer 5: DeFi Apps</h3>
+            <p>DEX, Lending, Insurance และบริการผู้ใช้ปลายทาง</p>
+            <div class="layer-note">ชั้นบนสุดคือแอปที่คนสัมผัสจริง เช่น แลกเหรียญ กู้ยืม หรือซื้อประกันแบบกระจายศูนย์</div>
+          </button>
+          <button class="pyramid-layer" type="button" style="--i:3;">
+            <h3>Layer 4: Oracle Networks</h3>
+            <p>เชื่อมข้อมูลโลกจริง เช่น ราคา หุ้น สภาพอากาศ เข้าสู่เชน</p>
+            <div class="layer-note">Smart Contract รู้แค่ข้อมูลในเชน จึงต้องใช้ออราเคิลอย่าง Chainlink นำข้อมูลนอกเชนเข้ามา</div>
+          </button>
+          <button class="pyramid-layer" type="button" style="--i:2;">
+            <h3>Layer 3: Token Standards</h3>
+            <p>กติกากลางแบบ ERC-20 และ ERC-721</p>
+            <div class="layer-note">มาตรฐานทำให้วอลเล็ต ตลาด และแอปต่าง ๆ เข้าใจกันได้ ลดการสร้างระบบใหม่ทุกครั้ง</div>
+          </button>
+          <button class="pyramid-layer" type="button" style="--i:1;">
+            <h3>Layer 2: Smart Contracts</h3>
+            <p>กฎอัตโนมัติที่ทำงานตามเงื่อนไข</p>
+            <div class="layer-note">นี่คือเครื่องจักรหลักของ DeFi ถ้าเงื่อนไขถูกต้อง ระบบก็ทำงานเองโดยไม่ต้องมีเจ้าหน้าที่อนุมัติ</div>
+          </button>
+          <button class="pyramid-layer" type="button" style="--i:0;">
+            <h3>Layer 1: Blockchain</h3>
+            <p>ฐานรากอย่าง Bitcoin, Ethereum, Solana</p>
+            <div class="layer-note">ทุกอย่างต้องยืนอยู่บนเครือข่ายที่เก็บข้อมูลได้ปลอดภัยพอ หากฐานไม่มั่นคง ชั้นบนก็ไม่มีทางน่าเชื่อถือ</div>
+          </button>
+        </div>
+
+        <div class="mint-burn grid-2">
+          <article class="detail-panel reveal">
+            <div class="factory-scene">
+              <div class="factory-coin">M</div>
+              <div class="factory-coin coin-2">M</div>
+              <div class="factory-coin coin-3">M</div>
+            </div>
+            <h3>MINT</h3>
+            <p>คือการสร้างโทเคนใหม่ เช่น Stablecoin ที่ออกเพิ่มเมื่อมีเงินสำรองเข้ามารองรับ</p>
+            <p><strong>Fixed Supply แบบ Bitcoin</strong> ถูกจำกัดไว้ในโปรโตคอล จึงไม่มีวันเกิน 21 ล้าน</p>
+          </article>
+          <article class="detail-panel reveal">
+            <div class="burn-scene">
+              <div class="burn-coin">B</div>
+              <div class="burn-coin coin-2">B</div>
+              <div class="burn-coin coin-3">B</div>
+              <div class="flames"></div>
+            </div>
+            <h3>BURN</h3>
+            <p>คือการทำลายโทเคนออกจากระบบ เช่น Stablecoin ที่ถูกไถ่กลับเป็นเงินสด</p>
+            <p><strong>บทเรียนจาก TerraUSD ปี 2565:</strong> Mint โดยไม่มีเงินสำรองจริงรองรับ กลายเป็นระเบิดเวลาที่สร้างความเสียหายราว 40 พันล้านดอลลาร์ใน 72 ชั่วโมง</p>
+          </article>
+        </div>
+
+        <div class="highway-scene reveal">
+          <div class="highway-city"><span class="packet"></span></div>
+          <div class="highway-main"><span class="packet"></span></div>
+        </div>
+        <div class="split-note reveal">
+          <h3>Layer 2: ทำไม Lightning Network สำคัญ</h3>
+          <p>ถ้า Bitcoin เปรียบเหมือนถนนหลวงที่ปลอดภัยสูงแต่คับคั่ง Lightning คือถนนด่วนในเมืองที่ช่วยให้จ่ายเงินย่อยได้ทันทีและค่าธรรมเนียมต่ำมาก โดยยังอาศัยความมั่นคงของถนนหลักเป็นฐาน</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-stable" id="stablecoin">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 10</span>
+          <span class="kicker">เงินดิจิทัลที่ราคาไม่ผันผวน</span>
+          <h2 class="section-title">Stablecoin กับ CBDC หน้าตาคล้ายกัน แต่เรื่องอำนาจควบคุมต่างกันมาก</h2>
+          <p class="section-intro">เมื่อโลกเริ่มคุ้นกับสินทรัพย์ดิจิทัล ก็มีความพยายามสร้าง “เงินดิจิทัลที่นิ่งกว่า” ขึ้นมา ทั้งจากเอกชนและจากรัฐ แต่สองกลุ่มนี้ไม่ได้มีปรัชญาเดียวกัน</p>
+        </header>
+
+        <div class="stable-grid stagger">
+          <article class="token-card reveal" style="--i:0;">
+            <span class="badge">Stablecoin</span>
+            <h3>USDC</h3>
+            <p>Stablecoin แบบ fiat-backed ของ Circle ที่มีการเปิดเผย Reserve ชัดเจน จึงถูกมองว่ามีความโปร่งใสสูงกว่าในกลุ่มหลัก</p>
+          </article>
+          <article class="token-card reveal" style="--i:1;">
+            <span class="badge">Stablecoin</span>
+            <h3>USDT</h3>
+            <p>เหรียญที่มีขนาดตลาดใหญ่ที่สุด ใช้งานแพร่หลายมาก แต่ถูกตั้งคำถามเรื่องการเปิดเผย Reserve มายาวนานกว่าคู่แข่งบางราย</p>
+          </article>
+          <article class="token-card reveal" style="--i:2;">
+            <span class="badge" style="background: rgba(239, 68, 68, 0.12); color: #ffc4c4;">Case Study</span>
+            <h3>TerraUSD</h3>
+            <p>Stablecoin แบบอัลกอริทึมที่ไม่มี Reserve จริง สุดท้ายพังในปี 2565 และ GENIUS Act ปี 2568 ก็ห้ามโมเดลประเภทนี้</p>
+          </article>
+        </div>
+
+        <div class="stable-uses stagger" style="margin-top:24px;">
+          <article class="icon-card reveal" style="--i:0;"><h3>โอนเงินต่างประเทศ</h3><p>ค่าธรรมเนียมต่ำและส่งถึงปลายทางไวกว่าโครงสร้างเดิมหลายกรณี</p></article>
+          <article class="icon-card reveal" style="--i:1;"><h3>ถือมูลค่าเป็น USD</h3><p>โดยไม่ต้องเปิดบัญชีต่างประเทศหรือใช้ระบบธนาคารข้ามพรมแดนแบบเต็มรูปแบบ</p></article>
+          <article class="icon-card reveal" style="--i:2;"><h3>ความช่วยเหลือมนุษยธรรม</h3><p>ส่งเงินถึงผู้รับโดยตรง ลดขั้นตอนตัวกลางและรอคอย</p></article>
+          <article class="icon-card reveal" style="--i:3;"><h3>ชำระระหว่างธุรกิจ</h3><p>ช่วยลดเวลาค้างชำระและลดแรงเสียดทานจากหลายสกุลเงิน</p></article>
+        </div>
+
+        <div class="table-shell reveal" style="margin-top:28px;">
+          <table class="comparison-table comparison-table-wide" aria-label="ตารางเปรียบเทียบ Bitcoin Stablecoin และ CBDC">
+            <thead>
+              <tr>
+                <th>มิติ</th>
+                <th>Bitcoin</th>
+                <th>Stablecoin</th>
+                <th>CBDC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="--i:0;"><td>ใครออก</td><td>ไม่มีใคร</td><td>บริษัทเอกชน</td><td>ธนาคารกลาง</td></tr>
+              <tr style="--i:1;"><td>รัฐควบคุม</td><td>ไม่เลย</td><td>บางส่วนผ่านกฎเกณฑ์และผู้ออก</td><td>100%</td></tr>
+              <tr style="--i:2;"><td>ความเป็นส่วนตัว</td><td>Pseudonymous</td><td>ค่อนข้างต่ำ</td><td>รัฐเห็นทุก Transaction ได้ตามการออกแบบ</td></tr>
+              <tr style="--i:3;"><td>ตัวอย่าง</td><td>BTC</td><td>USDC</td><td>Digital Baht</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-2" style="margin-top:26px;">
+          <article class="law-card reveal">
+            <h3>Digital Baht ของไทย</h3>
+            <p>ธปท. กำลังทดสอบ Retail CBDC โดยตั้งเป้าเรื่อง Financial Inclusion และการลดต้นทุนการชำระเงิน แต่ข้อกังวลสำคัญคือระดับการมองเห็นธุรกรรมของรัฐ</p>
+          </article>
+          <article class="quote-panel reveal" style="margin:0; border-color: rgba(247, 147, 26, 0.16);">
+            <blockquote>CBDC คือดิจิทัล แต่ยังควบคุมได้โดยรัฐ
+Bitcoin คือดิจิทัลและไม่มีใครควบคุม
+สองสิ่งนี้ต่างกันอย่างสิ้นเชิง</blockquote>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-thai" id="thai-use">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 11</span>
+          <span class="kicker">ใกล้กว่าที่คิด</span>
+          <h2 class="section-title">ประโยชน์ต่อชีวิตคนไทยเริ่มต้นได้แม้คุณจะไม่ถือ Bitcoin เลยแม้แต่บาทเดียว</h2>
+          <p class="section-intro">ส่วนนี้พูดถึงการใช้งานจริง ไม่ใช่การเก็งกำไร จุดสำคัญคือ Blockchain และ Stablecoin สามารถแก้ปัญหาเรื่องต้นทุน เวลา และการเข้าถึงบริการทางการเงินได้ในหลายสถานการณ์ของคนไทย</p>
+        </header>
+
+        <article class="story-card large reveal">
+          <div class="map-card">
+            <div>
+              <h3>สมชายในเกาหลี ส่งเงินกลับบ้านที่อุบลราชธานี</h3>
+              <p>ปัญหาของการโอนเงินข้ามประเทศไม่ใช่แค่ค่าธรรมเนียม แต่มันคือเวลารอ ความไม่แน่นอน และสัดส่วนเงินที่หายไปกลางทาง</p>
+            </div>
+            <div class="remit-map reveal" id="remitMap">
+              <svg viewBox="0 0 720 260" aria-label="เส้นทางการโอนเงินจากเกาหลีไปไทย">
+                <defs>
+                  <linearGradient id="mapGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#3B82F6"></stop>
+                    <stop offset="50%" stop-color="#00D4AA"></stop>
+                    <stop offset="100%" stop-color="#F7931A"></stop>
+                  </linearGradient>
+                </defs>
+                <circle cx="140" cy="110" r="48" fill="rgba(59,130,246,0.16)"></circle>
+                <circle cx="580" cy="150" r="48" fill="rgba(0,212,170,0.16)"></circle>
+                <path class="map-line" d="M180 110 C260 90 360 84 460 118 S560 156 580 150" fill="none" stroke="url(#mapGlow)" stroke-width="6" stroke-linecap="round"></path>
+                <circle cx="180" cy="110" r="10" fill="#3B82F6"></circle>
+                <circle cx="580" cy="150" r="10" fill="#00D4AA"></circle>
+                <rect x="94" y="76" width="92" height="56" rx="16" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
+                <rect x="534" y="116" width="92" height="56" rx="16" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"></rect>
+                <text x="140" y="104" fill="#F1F5F9" font-family="Kanit, sans-serif" font-size="20" text-anchor="middle">🇰🇷</text>
+                <text x="140" y="126" fill="#CBD5E1" font-family="Sarabun, sans-serif" font-size="14" text-anchor="middle">เกาหลี</text>
+                <text x="580" y="144" fill="#F1F5F9" font-family="Kanit, sans-serif" font-size="20" text-anchor="middle">🇹🇭</text>
+                <text x="580" y="166" fill="#CBD5E1" font-family="Sarabun, sans-serif" font-size="14" text-anchor="middle">ไทย</text>
+              </svg>
+            </div>
+            <div class="before-after">
+              <div class="panel before reveal">
+                <h3>ก่อน</h3>
+                <p>ส่ง 30,000 บาท ผ่านเคาน์เตอร์โอนเงิน ค่าธรรมเนียมราว 2,500 บาท และรอประมาณ 3 วัน แม่ได้รับจริงเพียง 27,500 บาท</p>
+              </div>
+              <div class="panel after reveal">
+                <h3>หลัง</h3>
+                <p>ส่งผ่าน Stablecoin จากมือถือ ค่าธรรมเนียมต่ำกว่า 50 บาท และถึงในราว 4 วินาที แม่ได้รับ 29,950+ บาท</p>
+                <div class="stats-inline">
+                  <span class="badge">ประหยัดประมาณ 2,450 บาทต่อครั้ง</span>
+                  <span class="badge">ค่าธรรมเนียมโอนเงินเฉลี่ยโลก 6.49%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="story-grid stagger" style="margin-top:24px;">
+          <article class="story-card reveal" style="--i:0;">
+            <h3>มะลิ แรงงานที่ไม่มีบัญชีธนาคาร</h3>
+            <p>ถ้าไม่มีเอกสารครบ การเปิดบัญชีธนาคารอาจทำไม่ได้ แต่การสร้าง Crypto Wallet บนมือถือใช้เวลาเพียง 2 นาที ไม่ต้องมีประวัติเครดิต และช่วยลดความเสี่ยงจากการพกเงินสด</p>
+            <p>สำหรับคนที่ต้องส่งเงินกลับบ้านข้ามพรมแดน นี่คือประตูสู่บริการการเงินที่ระบบเดิมปิดไว้</p>
+          </article>
+          <article class="story-card reveal" style="--i:1;">
+            <h3>ฟรีแลนซ์ไทยรับงานต่างประเทศ</h3>
+            <p>ช่องทางแบบเดิมอาจเสียค่าธรรมเนียมรวม 4-7% และรอเงิน 5 วัน แต่การรับ USDC แล้วขายเป็นเงินบาทผ่าน Exchange ที่ถูกกฎหมายอาจทำให้เงินถึงมือเร็วขึ้นมาก</p>
+            <p>ผู้รับงานประหยัดค่าธรรมเนียมต่อเดือนได้ราว 500-1,000 บาท โดยไม่ต้องเปลี่ยนตัวตนเป็นนักลงทุน</p>
+          </article>
+        </div>
+
+        <div class="grid-3 stagger" style="margin-top:26px;">
+          <article class="icon-card reveal" style="--i:0;"><h3>เกษตรกร</h3><p>QR Code เชื่อมข้อมูลบน Blockchain ให้ผู้ซื้อปลายทางตรวจสอบที่มาสินค้าส่งออกได้</p></article>
+          <article class="icon-card reveal" style="--i:1;"><h3>ผู้ซื้อบ้าน</h3><p>ตรวจสอบโฉนดและประวัติการโอนอย่างปลอมแปลงยากขึ้น</p></article>
+          <article class="icon-card reveal" style="--i:2;"><h3>นักศึกษา</h3><p>ใบปริญญาบน Blockchain ช่วยให้นายจ้างตรวจสอบได้ทันที</p></article>
+          <article class="icon-card reveal" style="--i:3;"><h3>พลังงาน Solar</h3><p>ซื้อขายไฟส่วนเกินระหว่างเพื่อนบ้านแบบ peer-to-peer ได้โปร่งใสขึ้น</p></article>
+          <article class="icon-card reveal" style="--i:4;"><h3>ผู้ป่วย</h3><p>ประวัติสุขภาพตามตัวไปได้ทุกโรงพยาบาล ลดข้อมูลกระจัดกระจาย</p></article>
+          <article class="icon-card reveal" style="--i:5;"><h3>สิ่งแวดล้อม</h3><p>Carbon Credit บันทึกบนเชนช่วยลดการนับซ้ำและตรวจสอบย้อนกลับได้</p></article>
+        </div>
+
+        <div class="grid-2" style="margin-top:28px;">
+          <article class="info-card reveal">
+            <h3>NFT ในโลกจริง ไม่ใช่แค่รูปภาพราคาแพง</h3>
+            <ul class="list-clean">
+              <li>บัตรคอนเสิร์ตที่ช่วยลดปัญหา Scalper</li>
+              <li>ใบรับรองวิชาชีพที่ตรวจสอบได้ทันที</li>
+              <li>ใบรับรองสินค้าแท้ของแบรนด์หรู</li>
+              <li>สิทธิสมาชิกและสิทธิ์เข้าชุมชนเฉพาะ</li>
+            </ul>
+          </article>
+          <article class="info-card reveal">
+            <h3>Blockchain กับการต้านคอร์รัปชัน</h3>
+            <p>ถ้าจัดซื้อจัดจ้างอยู่บน Blockchain ทุกขั้นตอนจะถูกเปิดต่อสาธารณะ ใครได้งานเท่าไรและตามเงื่อนไขอะไรตรวจสอบได้ชัดขึ้น</p>
+            <p>WFP ใช้ e-voucher ในยูเครนและซีเรียเพื่อลดต้นทุนราว 75% ลดเวลา 96% และช่วยป้องกันการทุจริตผ่านระบบตรวจสอบที่ชัดเจน</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-web3" id="web3">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 12</span>
+          <span class="kicker">อินเทอร์เน็ตรุ่นต่อไป</span>
+          <h2 class="section-title">Web3 และ Tokenization พยายามเปลี่ยนอินเทอร์เน็ตจากพื้นที่ที่เราใช้งาน มาเป็นพื้นที่ที่เราเป็นเจ้าของบางส่วน</h2>
+          <p class="section-intro">ถ้า Web1 คือโลกที่เราอ่านอย่างเดียว และ Web2 คือโลกที่เราอ่านและเขียนแต่แพลตฟอร์มเป็นเจ้าของข้อมูล Web3 กำลังทดลองโมเดลที่สิทธิ์บางอย่างอยู่ใน Wallet ของผู้ใช้เอง แม้ยังมีข้อจำกัดเรื่องความซับซ้อนและประสบการณ์ใช้งาน</p>
+        </header>
+
+        <div class="web-timeline stagger">
+          <article class="web-step reveal" style="--i:0;">
+            <span class="badge">Web1</span>
+            <h3>READ ONLY</h3>
+            <p>ยุคเว็บไซต์นิ่งช่วงทศวรรษ 1990 ผู้ใช้เปิดอ่านข้อมูล แต่แทบไม่มีส่วนร่วม</p>
+          </article>
+          <article class="web-step reveal" style="--i:1;">
+            <span class="badge" style="background: rgba(59,130,246,0.12); color:#d7e7ff;">Web2</span>
+            <h3>READ + WRITE</h3>
+            <p>ผู้ใช้โพสต์ แชร์ และสร้างคอนเทนต์ได้ แต่ข้อมูลอยู่กับแพลตฟอร์มใหญ่ เช่น Facebook, Twitter และ YouTube</p>
+          </article>
+          <article class="web-step reveal" style="--i:2;">
+            <span class="badge" style="background: rgba(139,92,246,0.12); color:#decfff;">Web3</span>
+            <h3>READ + WRITE + OWN</h3>
+            <p>ข้อมูล สิทธิ์ และสินทรัพย์บางอย่างอยู่ใน Wallet ของคุณเอง ไม่มีบริษัทใดเป็นเจ้าของแต่เพียงผู้เดียว แม้ระบบยังช้าและใช้งานยากอยู่บ้าง</p>
+          </article>
+        </div>
+
+        <div class="grid-2 stagger">
+          <article class="token-card reveal" style="--i:0;">
+            <h3>พันธบัตรรัฐบาลไทย Tokenized</h3>
+            <p>ก.ล.ต. อนุมัติแล้ว แสดงให้เห็นว่าสินทรัพย์การเงินแบบเดิมเริ่มเข้ามาอยู่บนรางดิจิทัลมากขึ้น</p>
+          </article>
+          <article class="token-card reveal" style="--i:1;">
+            <h3>BlackRock Tokenized Fund</h3>
+            <p>กองทุนมูลค่าราว 500 ล้านดอลลาร์บน Ethereum เป็นสัญญาณว่าสถาบันการเงินระดับโลกไม่ได้มองเรื่องนี้เป็นแค่ของเล่นอีกต่อไป</p>
+          </article>
+          <article class="token-card reveal" style="--i:2;">
+            <h3>Real Estate Tokenization</h3>
+            <p>ทำให้การถือสิทธิ์ในอสังหาริมทรัพย์แบ่งย่อยได้ เช่น ซื้อส่วนหนึ่งของคอนโดด้วยเงินหลักพันบาท</p>
+          </article>
+          <article class="token-card reveal" style="--i:3;">
+            <h3>Carbon Credit Token</h3>
+            <p>ช่วยลดปัญหาการขายซ้ำและนับซ้ำ เพราะแต่ละเครดิตมีร่องรอยการเคลื่อนไหวที่ตรวจสอบได้</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-scam" id="scam">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 13</span>
+          <span class="kicker">อันตรายที่ต้องรู้</span>
+          <h2 class="section-title">Scam ในโลก Crypto มีจริง ใหญ่จริง และโหดกว่าที่หลายคนคิด</h2>
+          <p class="section-intro">ส่วนนี้ไม่มีพื้นที่ให้ความโรแมนติก หากคุณเข้าใจเทคโนโลยีแต่ไม่เข้าใจการหลอกลวง คุณอาจเสียเงินได้เร็วพอ ๆ กับคนที่ไม่รู้อะไรเลย</p>
+        </header>
+
+        <div class="warning-shell reveal">
+          <div class="grid-2">
+            <div>
+              <span class="stat-number counter" data-target="51" data-decimals="0" data-prefix="$" data-suffix=" พันล้าน">0</span>
+              <p class="stat-label">ความเสียหายจาก Crypto Scam ทั่วโลก ปี 2567 ตามข้อมูล Chainalysis</p>
+            </div>
+            <div>
+              <p class="focus-quote">ยิ่งระบบเปิดและทั่วโลกมากเท่าไร ผู้ไม่หวังดีก็ยิ่งใช้ประโยชน์จากความไม่รู้ของคนได้มากขึ้นเท่านั้น</p>
+            </div>
+          </div>
+
+          <div class="red-flag-list">
+            <div class="red-flag-item" style="--i:0;"><span class="red-flag-icon">X</span><p>ผลตอบแทนสูงเกินจริง เช่น มากกว่า 1% ต่อวัน มักเป็น Ponzi แทบแน่นอน</p></div>
+            <div class="red-flag-item" style="--i:1;"><span class="red-flag-icon">X</span><p>ไม่มี Blockchain สาธารณะให้ตรวจสอบ หรือเอาแต่บอกให้เชื่อ</p></div>
+            <div class="red-flag-item" style="--i:2;"><span class="red-flag-icon">X</span><p>ทีมไม่เปิดเผยตัวตน แต่ขอให้คุณฝากเงินก้อนใหญ่</p></div>
+            <div class="red-flag-item" style="--i:3;"><span class="red-flag-icon">X</span><p>กดดันให้รีบตัดสินใจ ใช้ FOMO Pressure แทนข้อมูล</p></div>
+            <div class="red-flag-item" style="--i:4;"><span class="red-flag-icon">X</span><p>รับประกันกำไร ทั้งที่ไม่มีการลงทุนใดรับประกันได้จริง</p></div>
+            <div class="red-flag-item" style="--i:5;"><span class="red-flag-icon">X</span><p>พาดพิงโครงการลับแบบ NESARA หรือ GESARA เพื่อยืมความน่าเชื่อถือปลอม</p></div>
+          </div>
+        </div>
+
+        <div class="flip-grid stagger">
+          <article class="flip-card reveal" style="--i:0;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">FTX / SBF</span>
+                <h3>กระดานเทรดพัง</h3>
+                <p class="loss">$8.7 พันล้าน</p>
+                <p>แตะเพื่อดูว่าเกิดอะไรขึ้น</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>นำเงินลูกค้าไปใช้ผิดวัตถุประสงค์และปกปิดฐานะการเงินจริง</p>
+                <p>ผลลัพธ์: Sam Bankman-Fried ถูกตัดสินจำคุก 25 ปี</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:1;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">Terra / Luna</span>
+                <h3>Stablecoin พังทั้งระบบ</h3>
+                <p class="loss">$40 พันล้าน</p>
+                <p>แตะเพื่อดูเบื้องหลัง</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>โมเดลอัลกอริทึมไม่มี Reserve จริงรองรับ เมื่อความเชื่อมั่นหาย ระบบจึงถล่มเป็นโดมิโน</p>
+                <p>ผลลัพธ์: ผู้เกี่ยวข้องถูกตามตัวในระดับสากล และเกิด Interpol Red Notice</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:2;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">Silk Road</span>
+                <h3>ตลาดมืดบนอินเทอร์เน็ต</h3>
+                <p class="loss">BTC มูลค่า $10B ถูกยึด</p>
+                <p>แตะเพื่อดูผลลัพธ์</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>ใช้ Bitcoin เป็นเครื่องมือในตลาดมืด แต่ร่องรอยบนเชนไม่หายไป</p>
+                <p>ผลลัพธ์: ผู้ก่อตั้งถูกจำคุกตลอดชีวิต และรัฐยึด BTC มูลค่ามหาศาลได้</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:3;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">OneCoin</span>
+                <h3>ไม่มี Blockchain จริง</h3>
+                <p class="loss">$25 พันล้าน</p>
+                <p>แตะเพื่อดูรูปแบบหลอก</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>อ้างว่าเป็น Crypto แต่ไม่มีบล็อกเชนสาธารณะให้ตรวจสอบตั้งแต่แรก</p>
+                <p>ผลลัพธ์: ผู้ร่วมขบวนการหลายคนถูกจับ ขณะที่ Ruja Ignatova ยังอยู่ในรายชื่อ FBI Most Wanted</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:4;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">Bitfinex Hack</span>
+                <h3>แฮ็กแล้วถูกตามเงินได้</h3>
+                <p class="loss">$4.5 พันล้าน</p>
+                <p>แตะเพื่อดูบทเรียน</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>เงินที่ถูกขโมยเคลื่อนผ่านกระเป๋าหลายชั้น แต่ Blockchain ทำให้เส้นทางไม่หาย</p>
+                <p>ผลลัพธ์: FBI ตามรอยและจับผู้เกี่ยวข้องได้หลัง 6 ปี</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:5;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">PlusToken</span>
+                <h3>Ponzi ระดับเอเชีย</h3>
+                <p class="loss">$2 พันล้าน</p>
+                <p>แตะเพื่อดูจุดจบ</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>ลวงให้ผู้ใช้ฝากเหรียญเพื่อรับผลตอบแทนสูงผิดปกติ ก่อนจะพังลงแบบแชร์ลูกโซ่</p>
+                <p>ผลลัพธ์: ทางการจีนจับผู้เกี่ยวข้องได้ 109 คน</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:6;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">Tornado Cash</span>
+                <h3>เครื่องมือฟอกเงิน</h3>
+                <p class="loss">คดีสำคัญระดับโลก</p>
+                <p>แตะเพื่อดูบทสรุป</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>โปรโตคอลที่ช่วยปกปิดเส้นทางเงินถูกใช้ในคดีฟอกเงินจำนวนมาก</p>
+                <p>ผลลัพธ์: มีคำพิพากษาจำคุก 5 ปีในคดีที่เกี่ยวข้อง</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:7;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">BitConnect</span>
+                <h3>ผลตอบแทนปลอม</h3>
+                <p class="loss">$2.5 พันล้าน</p>
+                <p>แตะเพื่อดูสัญญาณเตือน</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>ใช้วาทกรรมผลตอบแทนมหาศาลต่อเนื่องเพื่อดึงเหยื่อเข้าแชร์ลูกโซ่</p>
+                <p>ผลลัพธ์: ผู้ก่อตั้งถูกตัดสินจำคุก 11 ปี</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:8;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">Twitter Hack</span>
+                <h3>บัญชีดังถูกยึดโพสต์หลอก</h3>
+                <p class="loss">เหยื่อทั่วโลก</p>
+                <p>แตะเพื่อดูบทเรียน</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>แฮ็กเกอร์เข้าถึงบัญชีคนดังอย่าง Obama และ Musk เพื่อหลอกให้โอน BTC</p>
+                <p>ผลลัพธ์: ผู้ก่อเหตุวัย 17 ปีถูกจับอย่างรวดเร็ว</p>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card reveal" style="--i:9;">
+            <div class="flip-card-inner">
+              <div class="flip-card-face front">
+                <span class="badge">Pig Butchering</span>
+                <h3>หลอกเชือดเหยื่อแบบค่อยเป็นค่อยไป</h3>
+                <p class="loss">$5.8B/ปี</p>
+                <p>แตะเพื่อดูขนาดปัญหา</p>
+              </div>
+              <div class="flip-card-face back">
+                <h3>เกิดอะไรขึ้น</h3>
+                <p>คนร้ายสร้างความสัมพันธ์ปลอม ชวนลงทุนปลอม แล้วดูดเงินทีละขั้น</p>
+                <p>ผลลัพธ์: DOJ ยึดทรัพย์ได้ 225 ล้านดอลลาร์ในปี 2568 แต่ความเสียหายต่อปียังสูงมาก</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="quote-panel reveal" style="margin-top:28px; border-color: rgba(239, 68, 68, 0.24); background: linear-gradient(180deg, rgba(239, 68, 68, 0.08), rgba(10, 22, 40, 0.92));">
+          <blockquote class="typewriter" data-text="Blockchain โปร่งใส 100%
+ผู้โกงอาจหลบได้สักพัก
+แต่ Blockchain ไม่เคยลืม"></blockquote>
+        </div>
+
+        <div class="tool-grid grid-4 stagger">
+          <article class="icon-card reveal" style="--i:0;"><h3>Etherscan.io</h3><p>ใช้ดูธุรกรรม Ethereum, USDC และ Token บน Ethereum</p></article>
+          <article class="icon-card reveal" style="--i:1;"><h3>Blockchain.com</h3><p>ใช้ตรวจสอบธุรกรรม Bitcoin</p></article>
+          <article class="icon-card reveal" style="--i:2;"><h3>Solscan.io</h3><p>ใช้ดู Solana และ USDC บน Solana</p></article>
+          <article class="icon-card reveal" style="--i:3;"><h3>BscScan.com</h3><p>ใช้ดูธุรกรรมบน BNB Chain</p></article>
+        </div>
+
+        <div class="split-note reveal" style="margin-top:24px; border-left: 4px solid var(--red);">
+          <h3>หน่วยงานแจ้งเหตุในไทย</h3>
+          <p>ก.ล.ต. ที่ sec.or.th, DSI โทร 1202 และตำรวจไซเบอร์โทร 1441 คือช่องทางหลักเมื่อพบความผิดปกติหรือการหลอกลวง</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section theme-future" id="future">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="section-number">Section 14</span>
+          <span class="kicker">โลกกำลังไปทางไหน?</span>
+          <h2 class="section-title">อนาคตของเงินดิจิทัลจะไม่เดินเส้นตรง และคนที่เข้าใจความเสี่ยงพร้อมกันจะได้เปรียบที่สุด</h2>
+          <p class="section-intro">บทสุดท้ายนี้ไม่ได้ชวนให้เชื่อ แต่ชวนให้มองภาพรวม ตั้งแต่ภัยจาก Quantum Computing ไปจนถึงกฎหมายใหม่และเหตุผลทางจิตวิทยาที่ทำให้ผู้เชี่ยวชาญจำนวนมากเชื่อช้าที่สุด</p>
+        </header>
+
+        <div class="future-grid stagger">
+          <article class="law-card reveal" style="--i:0;">
+            <h3>ภัยคุกคามจาก Quantum Computing</h3>
+            <p>Google Paper วันที่ 31 มีนาคม 2569 ประเมินว่าอาจต้องใช้ Qubits น้อยกว่า 500,000 เพื่อเจาะ ECDSA-256 ที่ Bitcoin ใช้ แต่ตอนนี้ยังห่างจากระดับอันตรายจริงราว 5,000 เท่า</p>
+            <p>ความเสี่ยงนี้ไม่ใช่ของ Bitcoin อย่างเดียว HTTPS, SWIFT และ Online Banking ก็พึ่งพาวิธีเข้ารหัสในโลกเดียวกัน และแนวคิด Harvest Now, Decrypt Later ก็กำลังเกิดขึ้นแล้ว</p>
+            <p class="muted">เส้นเวลาอันตรายจริงยังไม่แน่นอน แต่การเตรียมมาตรฐาน post-quantum เป็นเรื่องจำเป็น</p>
+          </article>
+          <article class="law-card reveal" style="--i:1;">
+            <h3>GENIUS Act</h3>
+            <p>กฎหมายนี้ถูกลงนามเมื่อ 18 กรกฎาคม 2568 และส่งสัญญาณชัดว่า Stablecoin กำลังเข้าสู่กระแสหลักภายใต้กรอบควบคุม</p>
+            <ul class="list-clean">
+              <li>ต้องมีใบอนุญาต</li>
+              <li>Reserve 1:1 บังคับ</li>
+              <li>เปิดเผยข้อมูลทุกเดือน</li>
+              <li>ตรวจสอบทุกปี</li>
+              <li>แลกคืน USD ได้ทันที</li>
+              <li>ห้ามจ่ายดอกเบี้ยเพื่อกันเหตุซ้ำแบบ TerraUSD</li>
+            </ul>
+          </article>
+          <article class="law-card reveal" style="--i:2;">
+            <h3>กฎหมาย Crypto ในไทย</h3>
+            <p>ไทยมี พ.ร.ก. สินทรัพย์ดิจิทัล ปี 2561 แล้ว Exchange ที่ถูกกฎหมาย เช่น Bitkub, Bitazza และ Upbit TH ต้องอยู่ภายใต้การกำกับ</p>
+            <p>กำไรจาก Crypto มีภาษีหัก ณ ที่จ่าย 15% และ Digital Asset ยังไม่ใช่ Legal Tender ในไทย ขณะเดียวกัน Virtual Bank กำลังเปิดตัวในปี 2569</p>
+          </article>
+        </div>
+
+        <div class="detail-panel reveal" style="margin-top:28px;">
+          <h3>อนาคต 5-10 ปี</h3>
+          <div class="future-timeline reveal">
+            <div class="future-event" style="--i:0;"><strong>2569:</strong> Virtual Bank ในไทยเริ่มเปิดตัว</div>
+            <div class="future-event" style="--i:1;"><strong>2569-2571:</strong> Digital Baht อาจเข้าสู่การใช้งานจริงมากขึ้น</div>
+            <div class="future-event" style="--i:2;"><strong>2569-2572:</strong> Tokenized Assets มีโอกาสกลายเป็นกระแสหลัก</div>
+            <div class="future-event" style="--i:3;"><strong>2573:</strong> NSA Deadline ผลักดันให้ระบบสำคัญต้อง Post-Quantum Safe</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:28px;">
+          <article class="info-card reveal">
+            <h3>ทำไมผู้เชี่ยวชาญถึงเชื่อช้าที่สุด</h3>
+            <p>Curse of Knowledge ทำให้คนที่เข้าใจระบบเดิมลึกมาก บางครั้งจินตนาการระบบใหม่ยากกว่าคนธรรมดา ประวัติศาสตร์จึงเต็มไปด้วยตัวอย่างของผู้เชี่ยวชาญที่หัวเราะกับสิ่งใหม่ก่อนจะต้องปรับตัวตามทีหลัง</p>
+            <p>Nokia เคยเยาะเย้ย iPhone, Steve Ballmer เคยหัวเราะกับ iPhone, นักหนังสือพิมพ์เคยมองว่าอินเทอร์เน็ตเป็นแฟชั่น และ Jamie Dimon เคยเรียก Bitcoin ว่า fraud ในปี 2560 ก่อนที่ JPMorgan จะมี Blockchain Division ในวันนี้</p>
+          </article>
+          <article class="quote-panel reveal" style="margin:0;">
+            <blockquote>เทคโนโลยีใหม่มักถูกปฏิเสธโดยคนที่ได้ประโยชน์สูงสุดจากระบบเดิม</blockquote>
+            <p class="quote-caption">นี่ไม่ใช่การโจมตีผู้เชี่ยวชาญ แต่เป็นการเตือนว่าประสบการณ์เดิมอาจเป็นทั้งจุดแข็งและจุดบอดพร้อมกัน</p>
+          </article>
+        </div>
+
+        <div class="dyor-box reveal">
+          <h3 class="section-title" style="max-width:none; font-size:clamp(28px,4vw,42px);">⚡ Do Your Own Research</h3>
+          <div class="dyor-points">
+            <div class="point" style="--i:0;"><span class="count-pill">1</span><p><strong>เนื้อหานี้จัดทำเพื่อการศึกษาเท่านั้น</strong> ไม่ถือเป็นคำแนะนำการลงทุนใด ๆ</p></div>
+            <div class="point" style="--i:1;"><span class="count-pill">2</span><p><strong>อย่าเชื่อใครง่าย ๆ รวมถึง AI</strong> จงตรวจสอบข้อมูลด้วยตัวเองเสมอ</p></div>
+            <div class="point" style="--i:2;"><span class="count-pill">3</span><p><strong>Crypto มีความเสี่ยงสูงมาก</strong> ราคาสามารถลดลงได้ 80-90% และไม่ใช่ทางออกเดียวของปัญหาโลกการเงิน</p></div>
+            <div class="point" style="--i:3;"><span class="count-pill">4</span><p><strong>ทุกการตัดสินใจทางการเงินเป็นความรับผิดชอบของคุณเอง</strong> ความรู้คือเกราะป้องกัน ไม่ใช่ใบอนุญาตให้ประมาท</p></div>
+          </div>
+          <p class="focus-quote">Don't Trust. Verify.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    จัดทำโดย Claude AI (Anthropic) เพื่อการศึกษา
+  </footer>
+
+  <script>
+    const heroCanvas = document.getElementById("heroCanvas");
+    const progressBar = document.getElementById("progressBar");
+    const backToTop = document.getElementById("backToTop");
+    const navToggle = document.getElementById("navToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    function formatCounterValue(value, decimals, prefix, suffix) {
+      const formatted = new Intl.NumberFormat("th-TH", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+      }).format(value);
+      return `${prefix || ""}${formatted}${suffix || ""}`;
+    }
+
+    function animateCounter(element) {
+      if (element.dataset.counted === "true") {
+        return;
+      }
+      element.dataset.counted = "true";
+      const target = Number(element.dataset.target || "0");
+      const decimals = Number(element.dataset.decimals || "0");
+      const prefix = element.dataset.prefix || "";
+      const suffix = element.dataset.suffix || "";
+      const duration = 1600;
+      const startTime = performance.now();
+
+      function frame(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        element.textContent = formatCounterValue(current, decimals, prefix, suffix);
+        if (progress < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          element.textContent = formatCounterValue(target, decimals, prefix, suffix);
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    function typewrite(element) {
+      if (element.dataset.typed === "true") {
+        return;
+      }
+      element.dataset.typed = "true";
+      const text = element.dataset.text || "";
+      let index = 0;
+      element.textContent = "";
+
+      function step() {
+        element.textContent = text.slice(0, index);
+        index += 1;
+        if (index <= text.length) {
+          const delay = text[index - 1] === "\n" ? 120 : 34;
+          window.setTimeout(step, delay);
+        } else {
+          element.classList.add("done");
+        }
+      }
+
+      step();
+    }
+
+    function initIntersectionObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("revealed");
+
+          if (entry.target.matches(".remit-map")) {
+            entry.target.classList.add("revealed");
+          }
+
+          if (entry.target.matches(".counter")) {
+            animateCounter(entry.target);
+          }
+
+          entry.target.querySelectorAll?.(".counter").forEach((counter) => animateCounter(counter));
+          entry.target.querySelectorAll?.(".typewriter").forEach((node) => typewrite(node));
+
+          if (entry.target.matches(".typewriter")) {
+            typewrite(entry.target);
+          }
+
+          observer.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -60px 0px"
+      });
+
+      document.querySelectorAll(".reveal, .counter:not(.immediate), .typewriter, .remit-map").forEach((element) => {
+        observer.observe(element);
+      });
+    }
+
+    function initImmediateCounters() {
+      document.querySelectorAll(".counter.immediate").forEach((counter) => animateCounter(counter));
+    }
+
+    function initNavbar() {
+      navToggle?.addEventListener("click", () => {
+        const expanded = navToggle.getAttribute("aria-expanded") === "true";
+        navToggle.setAttribute("aria-expanded", String(!expanded));
+        navMenu.classList.toggle("open", !expanded);
+      });
+
+      navMenu?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("open");
+          navToggle?.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+
+    function initScrollUi() {
+      function onScroll() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = `${ratio}%`;
+        backToTop.classList.toggle("visible", scrollTop > 400);
+      }
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+      onScroll();
+    }
+
+    function simpleHash(input) {
+      let hash = 5381;
+      for (let index = 0; index < input.length; index += 1) {
+        hash = ((hash << 5) + hash) + input.charCodeAt(index);
+        hash &= 0xffffffff;
+      }
+      const normalized = (hash >>> 0).toString(16).padStart(8, "0");
+      return `${normalized}${normalized.split("").reverse().join("").slice(0, 8)}`;
+    }
+
+    function initBlockchainDemo() {
+      const state = {
+        originalData1: "A ส่ง 1 BTC ให้ B",
+        data2: "B ส่ง 0.25 BTC ให้ C",
+        data3: "C ส่ง 0.1 BTC ให้ D"
+      };
+
+      const data1 = document.getElementById("blockData1");
+      const data2 = document.getElementById("blockData2");
+      const data3 = document.getElementById("blockData3");
+      const hash1 = document.getElementById("blockHash1");
+      const hash2 = document.getElementById("blockHash2");
+      const hash3 = document.getElementById("blockHash3");
+      const prev2 = document.getElementById("blockPrev2");
+      const prev3 = document.getElementById("blockPrev3");
+      const textArea = document.getElementById("tamperInput");
+      const status = document.getElementById("demoStatus");
+      const tamperButton = document.getElementById("tamperButton");
+      const resetButton = document.getElementById("resetButton");
+      const cards = document.querySelectorAll(".block-card");
+
+      function render(payload1, tampered) {
+        const firstHash = simpleHash(`1:${payload1}:000000000000`);
+        const secondPrev = simpleHash(`1:${state.originalData1}:000000000000`);
+        const secondHash = simpleHash(`2:${state.data2}:${secondPrev}`);
+        const thirdHash = simpleHash(`3:${state.data3}:${secondHash}`);
+
+        data1.textContent = payload1;
+        data2.textContent = state.data2;
+        data3.textContent = state.data3;
+        hash1.textContent = firstHash;
+        hash2.textContent = secondHash;
+        hash3.textContent = thirdHash;
+        prev2.textContent = secondPrev;
+        prev3.textContent = secondHash;
+
+        cards.forEach((card) => card.classList.remove("invalid"));
+
+        if (tampered) {
+          cards[1].classList.add("invalid");
+          cards[2].classList.add("invalid");
+          status.textContent = "ทุก Node ทั่วโลกปฏิเสธการแก้ไขนี้ทันที เพราะ Hash ของ Block #1 ไม่ตรงกับ Previous Hash ที่ Block #2 อ้างอิงอยู่ เครือข่ายจึงมองว่าทั้งสายหลังจากนั้นไม่ถูกต้อง";
+        } else {
+          status.textContent = "สถานะปกติ: Block ทั้งสามเชื่อมกันสมบูรณ์ และ Hash ของแต่ละบล็อกตรงกับ Previous Hash ของบล็อกถัดไป";
+        }
+      }
+
+      tamperButton.addEventListener("click", () => {
+        const nextValue = textArea.value.trim() || "A ส่ง 999 BTC ให้ตัวเอง";
+        render(nextValue, true);
+      });
+
+      resetButton.addEventListener("click", () => {
+        textArea.value = state.originalData1;
+        render(state.originalData1, false);
+      });
+
+      render(state.originalData1, false);
+    }
+
+    function initFlipCards() {
+      const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+      function setFlipState(card, flipped) {
+        const front = card.querySelector(".flip-card-face.front");
+        const back = card.querySelector(".flip-card-face.back");
+        card.classList.toggle("flipped", flipped);
+        card.dataset.flipped = String(flipped);
+        card.setAttribute("aria-pressed", String(flipped));
+
+        if (!front || !back) {
+          return;
+        }
+
+        front.style.transform = flipped ? "rotateY(-180deg)" : "rotateY(0deg)";
+        front.style.opacity = flipped ? "0" : "1";
+        back.style.transform = flipped ? "rotateY(0deg)" : "rotateY(180deg)";
+        back.style.opacity = flipped ? "1" : "0";
+      }
+
+      document.querySelectorAll(".flip-card").forEach((card) => {
+        card.setAttribute("role", "button");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("aria-pressed", "false");
+        card.dataset.pinned = "false";
+        setFlipState(card, false);
+
+        if (supportsHover) {
+          card.addEventListener("mouseenter", () => {
+            if (card.dataset.pinned !== "true") {
+              setFlipState(card, true);
+            }
+          });
+
+          card.addEventListener("mouseleave", () => {
+            if (card.dataset.pinned !== "true") {
+              setFlipState(card, false);
+            }
+          });
+        }
+
+        card.addEventListener("click", () => {
+          if (supportsHover) {
+            const nextPinned = card.dataset.pinned !== "true";
+            card.dataset.pinned = String(nextPinned);
+            setFlipState(card, nextPinned);
+            return;
+          }
+
+          const nextFlipped = card.dataset.flipped !== "true";
+          setFlipState(card, nextFlipped);
+        });
+
+        card.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") {
+            return;
+          }
+
+          event.preventDefault();
+
+          if (supportsHover) {
+            const nextPinned = card.dataset.pinned !== "true";
+            card.dataset.pinned = String(nextPinned);
+            setFlipState(card, nextPinned);
+            return;
+          }
+
+          const nextFlipped = card.dataset.flipped !== "true";
+          setFlipState(card, nextFlipped);
+        });
+      });
+    }
+
+    function initPyramid() {
+      const layers = document.querySelectorAll(".pyramid-layer");
+      layers.forEach((layer, index) => {
+        if (index === layers.length - 1) {
+          layer.classList.add("active");
+        }
+        layer.addEventListener("click", () => {
+          layer.classList.toggle("active");
+        });
+      });
+    }
+
+    function initParticles() {
+      if (!heroCanvas) {
+        return;
+      }
+      const context = heroCanvas.getContext("2d");
+      const pointer = { x: 0, y: 0 };
+      let width = 0;
+      let height = 0;
+      let animationFrame = 0;
+      const particleCount = 72;
+      const particles = [];
+
+      function resize() {
+        const ratio = window.devicePixelRatio || 1;
+        width = heroCanvas.clientWidth = heroCanvas.offsetWidth || window.innerWidth;
+        height = heroCanvas.clientHeight = heroCanvas.offsetHeight || heroCanvas.parentElement.offsetHeight;
+        heroCanvas.width = width * ratio;
+        heroCanvas.height = height * ratio;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function createParticles() {
+        particles.length = 0;
+        for (let index = 0; index < particleCount; index += 1) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: (Math.random() - 0.5) * 0.25,
+            radius: Math.random() * 2.2 + 1.2
+          });
+        }
+      }
+
+      function draw() {
+        context.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i += 1) {
+          const particle = particles[i];
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+
+          if (particle.x < -20) particle.x = width + 20;
+          if (particle.x > width + 20) particle.x = -20;
+          if (particle.y < -20) particle.y = height + 20;
+          if (particle.y > height + 20) particle.y = -20;
+
+          const offsetX = (pointer.x - width / 2) * 0.008;
+          const offsetY = (pointer.y - height / 2) * 0.008;
+          const drawX = particle.x + offsetX;
+          const drawY = particle.y + offsetY;
+
+          context.beginPath();
+          context.arc(drawX, drawY, particle.radius, 0, Math.PI * 2);
+          context.fillStyle = "rgba(241, 245, 249, 0.72)";
+          context.fill();
+
+          for (let j = i + 1; j < particles.length; j += 1) {
+            const other = particles[j];
+            const otherX = other.x + offsetX;
+            const otherY = other.y + offsetY;
+            const dx = drawX - otherX;
+            const dy = drawY - otherY;
+            const distance = Math.sqrt((dx * dx) + (dy * dy));
+            if (distance < 120) {
+              context.beginPath();
+              context.moveTo(drawX, drawY);
+              context.lineTo(otherX, otherY);
+              context.strokeStyle = `rgba(109, 170, 255, ${0.18 - (distance / 1200)})`;
+              context.lineWidth = 1;
+              context.stroke();
+            }
+          }
+        }
+
+        animationFrame = requestAnimationFrame(draw);
+      }
+
+      window.addEventListener("mousemove", (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+      });
+
+      window.addEventListener("resize", () => {
+        resize();
+        createParticles();
+      });
+
+      resize();
+      createParticles();
+      cancelAnimationFrame(animationFrame);
+      draw();
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initParticles();
+      initIntersectionObserver();
+      initImmediateCounters();
+      initNavbar();
+      initScrollUi();
+      initBlockchainDemo();
+      initFlipCards();
+      initPyramid();
+    });
+  </script>
+</body>
+</html>
